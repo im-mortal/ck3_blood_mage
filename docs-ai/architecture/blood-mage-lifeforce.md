@@ -24,9 +24,10 @@
 | Action | Cost / Requirements | Lifeforce Delta | XP Gain |
 | --- | --- | --- | --- |
 | `lifedrain_prisoner_interaction` | Piety. Dungeon prisoner. | Grants `lifeforce_modifier_minor` | +1 hematurgy |
-| `lifedrain_courtier_event_interaction` | Piety. Unlanded courtier. | Grants `lifeforce_modifier_minor` | +1 hematurgy |
-| Lethal duel kill (combat on-action) | Win lethal single combat duel (`bm_on_character_death_duel`). | Grants `lifeforce_modifier_minor` (strictly exclusive to Blood Knight) | +5 slaughter (Knight) |
-| Battle victory (combat on-action) | Win army battle as knight/commander. | 33% chance grants `lifeforce_modifier_minor` (Blood Knight) | +5-6 vanguard (Knight) |
+| `lifedrain_courtier_event_interaction` (Minor Lifedrain) | 25 Piety. Unlanded courtier/prisoner (Mage) or prisoner (Knight). | Grants `lifeforce_modifier_minor` | +1 hematurgy (Mage) / +1 slaughter (Knight) |
+| Lethal duel kill (combat on-action) | Win lethal single combat duel (`bm_on_character_death_duel`). | Grants `lifeforce_modifier_major` (strictly exclusive to Blood Knight) | +5 slaughter (Knight) |
+| Battle victory (combat on-action) | Win army battle as knight/commander. | 33% chance grants `lifeforce_modifier_minor` (Blood Knight) | +3-4 vanguard (Knight) |
+| Ambient yearly pulse (`blood_mage_yearly_events.004`) | Has `lifestyle_blood_knight`, no cost. | 33% chance grants `lifeforce_modifier_minor` (strictly exclusive to Blood Knight; Mages do not receive ambient lifeforce) | None |
 | `bm_manifest_lifeforce_decision` | 100 piety. Learning check. | Grants Minor or Major Lifeforce | +3 enlightenment (Mage & Knight) |
 | Condense Lifeforce (minor ritual) | 100 piety + Minor Lifeforce. | Consumes Minor Lifeforce, grants Major Lifeforce | +2 ancient (Mage & Knight) |
 | `seek_power` (decision) | Free. CD: 1-2 yrs. | Grants Minor Lifeforce (beast/source/knight contest) or Major (Mage ancient/harvest) | +1-2 school (Mage) / +1-2 slaughter/vanguard/enlightenment (Knight) |
@@ -37,9 +38,9 @@
 | `bm_cast_blood_magic_superior_decision` (Mastery/New Edu/Superior Rune/Ascended Traits/Golem) | 200-1000 piety + Superior Lifeforce. | Consumes `lifeforce_modifier_superior` | +5-10 track XP |
 | `bm_heal_ailment` | 15 / 35 / 100 piety + Lifeforce. | Minor: consumes Minor; Major: consumes Major; Deadly: consumes Minor & Major | Minor: +2 benediction (Mage) / +2 enlightenment (Knight self) / +1 vanguard & +1 benediction (Knight ally); Major: +4 benediction; Deadly: +8 benediction |
 | `make_blood_knight_interaction` | 100 piety + Major Lifeforce. | Consumes `lifeforce_modifier_major` | +4 benediction |
-| `empower_blood_knight_interaction` (Minor option) | Minor Lifeforce. | Consumes `lifeforce_modifier_minor` | +2 benediction |
-| `empower_blood_knight_interaction` (Major option) | Major Lifeforce. | Consumes `lifeforce_modifier_major` | +4 benediction |
-| `bm_bless_bloodline_interaction` | 35 piety + Minor Lifeforce. | Consumes `lifeforce_modifier_minor` | +2 bloodline |
+| `empower_blood_knight_interaction` (Minor option) | Minor Lifeforce. | Consumes `lifeforce_modifier_minor` | +2 benediction (Knight caster) |
+| `empower_blood_knight_interaction` (Major option) | Major Lifeforce. | Consumes `lifeforce_modifier_major` | +4 benediction (Knight caster) |
+| `bm_bless_bloodline_interaction` | 35 piety + Minor Lifeforce. | Consumes `lifeforce_modifier_minor` | +2 bloodline (Mage) / +2 vanguard (Knight) |
 | `grant_lifeforce_interaction` | 25p (Minor) or 50p (Major) + Lifeforce. | Consumes actor's Lifeforce, grants to target | +1 / +2 enlightenment |
 | `grant_lifeforce_interaction_reversed` | 25 piety + Major Lifeforce. | Consumes `lifeforce_modifier_major`, grants target minor | +4 benediction |
 

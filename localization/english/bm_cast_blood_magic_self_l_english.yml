@@ -114,8 +114,10 @@
     bm_cast_blood_magic_minor.001.channel: "Channel Minor Lifeforce"
     bm_cast_blood_magic_minor.001.attune: "Attune Lifeforce"
     bm_cast_blood_magic_minor.001.purge: "Purge Impurities and Infirmities"
+    bm_cast_blood_magic_minor.001.purge.tt: "Purge physical wounds, illnesses, and negative physical traits using minor lifeforce."
     bm_cast_blood_magic_minor.001.condense: "Condense Lifeforce"
     bm_cast_blood_magic_minor.001.condense.tt: "Spend #V 100#! Piety and transmute [GetModifier('lifeforce_modifier_minor').GetNameWithTooltip] into [GetModifier('lifeforce_modifier_major').GetNameWithTooltip]."
+    bm_cast_blood_magic_minor.001.blood_rune_minor: "Inscribe Minor Blood Rune"
     bm_cast_blood_magic_minor.001.cancel: "Back"
 
     # Cast Blood Magic Major
@@ -148,8 +150,8 @@
     bm_cast_blood_magic_superior.001.master_education: "Master Education: 5-Star Ascension"
     bm_cast_blood_magic_superior.001.new_education: "Embrace New Education"
     bm_cast_blood_magic_superior.001.blood_rune_superior: "Inscribe Superior Blood Rune"
-    bm_cast_blood_magic_superior.001.manifest_traits: "Channel Lifeforce: Transcendent Perfection"
-    bm_cast_blood_magic_superior.001.manifest_traits_tt: "Focus Superior Lifeforce into transmuting congenital traits (Intellect, Physique, Beauty) to apex ranks 4 and 5."
+    bm_cast_blood_magic_superior.001.manifest_traits: "Channel Lifeforce: Apex Perfection"
+    bm_cast_blood_magic_superior.001.manifest_traits_tt: "Focus Superior Lifeforce into transmuting congenital traits (Intellect, Physique, Beauty) to apex ranks 3 to 5 (Genius, Herculean, Beautiful, and beyond)."
     bm_cast_blood_magic_superior.001.create_blood_golem: "Forge Blood Golem"
     bm_cast_blood_magic_superior.001.cancel: "Back"
 

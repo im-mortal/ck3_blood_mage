@@ -10,10 +10,8 @@ bm_trait_drain.001 = {
     option = {
         name = bm_trait_drain.001.b
         trigger = {
-            AND = {
-                scope:recipient = { has_trait = intellect_good }
-                NOT = { has_trait_rank = { trait = intellect_good rank >= 5 } }
-            }
+            scope:recipient = { has_trait = intellect_good }
+            NOT = { has_trait_rank = { trait = intellect_good rank >= 5 } }
         }
 
         # Cost
@@ -194,6 +192,13 @@ bm_trait_drain.001 = {
                     TRACK = hematurgy
                     XP = 2
                 }
+                if = {
+                    limit = { has_trait = lifestyle_blood_knight }
+                    add_blood_knight_xp = {
+                        TRACK = slaughter
+                        XP = 2
+                    }
+                }
 
                 # Prisoner dies
                 sacrifice_prisoner_effect = {
@@ -250,6 +255,13 @@ bm_trait_drain.001 = {
                 add_xp_bm_dynamic = {
                     TRACK = hematurgy
                     XP = 2
+                }
+                if = {
+                    limit = { has_trait = lifestyle_blood_knight }
+                    add_blood_knight_xp = {
+                        TRACK = slaughter
+                        XP = 2
+                    }
                 }
 
                 # Prisoner dies
@@ -308,6 +320,13 @@ bm_trait_drain.001 = {
                 add_xp_bm_dynamic = {
                     TRACK = hematurgy
                     XP = 2
+                }
+                if = {
+                    limit = { has_trait = lifestyle_blood_knight }
+                    add_blood_knight_xp = {
+                        TRACK = slaughter
+                        XP = 2
+                    }
                 }
 
                 # Prisoner dies

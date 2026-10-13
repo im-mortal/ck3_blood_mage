@@ -35,7 +35,10 @@
         }
     }
     is_valid_showing_failures_only = {
-        scope:recipient = { is_knight_of = scope:actor }
+        custom_description = {
+            text = recipient_must_be_knight_tt
+            scope:recipient = { is_knight_of = scope:actor }
+        }
         trigger_if = {
             limit = {
                 scope:actor = {
@@ -163,7 +166,7 @@
             scope:actor = { benediction_magic_cast_effect_major = yes }
         }
         scope:recipient = {
-            add_trait = lifestyle_blood_knight
+            bm_become_blood_knight_effect = yes
             add_opinion = {
                 target = scope:actor
                 modifier = magic_opinion_positive
@@ -184,6 +187,7 @@
     ai_will_do = {
         base = 33
         ai_willingness_to_do_positive_magic = yes
+        bm_blood_knight_prevalence_ai_acquisition_modifier = yes
         modifier = {
             scope:recipient = { prowess >= 12 }
             add = 30
@@ -198,7 +202,7 @@ empower_blood_knight_interaction = {
     interface_priority = 189
 
     is_shown = {
-        scope:actor = { has_trait = lifestyle_blood_mage }
+        scope:actor = { has_trait = lifestyle_blood_knight }
         scope:recipient = {
             is_courtier_of = scope:actor
             NOT = { this = scope:actor }
@@ -254,10 +258,13 @@ empower_blood_knight_interaction = {
     }
 
     on_accept = {
-        debug_log = "BloodMageInteraction: empower_blood_knight | Actor: [actor.GetShortUINameNoTooltip] -> Recipient: [recipient.GetShortUINameNoTooltip]"
+        debug_log = "BloodKnightInteraction: empower_blood_knight | Actor: [actor.GetShortUINameNoTooltip] -> Recipient: [recipient.GetShortUINameNoTooltip]"
         if = {
             limit = { scope:empower_major = yes }
-            scope:actor = { benediction_magic_cast_effect_major = yes }
+            scope:actor = {
+                remove_character_modifier = lifeforce_modifier_major
+                add_blood_knight_xp = { TRACK = benediction XP = 4 }
+            }
             scope:recipient = {
                 add_blood_knight_xp = { TRACK = vanguard XP = 10 }
                 add_blood_knight_xp = { TRACK = slaughter XP = 10 }
@@ -270,7 +277,10 @@ empower_blood_knight_interaction = {
         }
         else_if = {
             limit = { scope:empower_minor = yes }
-            scope:actor = { benediction_magic_cast_effect_minor = yes }
+            scope:actor = {
+                remove_character_modifier = lifeforce_modifier_minor
+                add_blood_knight_xp = { TRACK = benediction XP = 2 }
+            }
             scope:recipient = {
                 add_blood_knight_xp = { TRACK = vanguard XP = 5 }
                 add_blood_knight_xp = { TRACK = slaughter XP = 5 }

@@ -43,6 +43,27 @@ bm_blood_mage_prevalence = {
 	}
 }
 
+bm_blood_knight_prevalence = {
+	categories = {
+		blood_mages game_modes tweaks
+	}
+	default = bm_blood_knight_prevalence_default
+	bm_blood_knight_prevalence_player_only = {
+	}
+	bm_blood_knight_prevalence_one_in_10000 = {
+	}
+	bm_blood_knight_prevalence_one_in_1000 = {
+	}
+	bm_blood_knight_prevalence_default = {
+	}
+	bm_blood_knight_prevalence_one_in_100 = {
+	}
+	bm_blood_knight_prevalence_one_in_10 = {
+	}
+	bm_blood_knight_prevalence_everyone = {
+	}
+}
+
 bm_initiation_faith_requirement = {
 	categories = {
 		blood_mages game_modes tweaks faith
@@ -65,4 +86,34 @@ blodtru_religion = {
     }
     blodtru_religion_disabled = {
     }
+}
+
+bm_starting_counties_faith = {
+	categories = {
+		blood_mages game_modes tweaks faith
+	}
+	default = bm_starting_counties_faith_vanilla
+	bm_starting_counties_faith_vanilla = {
+	}
+	bm_starting_counties_faith_iceland = {
+	}
+	bm_starting_counties_faith_tsushima = {
+	}
+	bm_starting_counties_faith_both = {
+	}
+}
+
+bm_starting_holders_blood_mage = {
+	categories = {
+		blood_mages game_modes tweaks faith
+	}
+	default = bm_starting_holders_blood_mage_vanilla
+	bm_starting_holders_blood_mage_vanilla = {
+	}
+	bm_starting_holders_blood_mage_iceland = {
+	}
+	bm_starting_holders_blood_mage_tsushima = {
+	}
+	bm_starting_holders_blood_mage_both = {
+	}
 }

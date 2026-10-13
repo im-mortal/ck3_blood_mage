@@ -12,17 +12,34 @@
 lifestyle_blood_knight = {
 	category = lifestyle
 	flag = reweaving_lifestyle_trait
-	icon = blood_mage_3.dds
+	icon = bm_blood_knight.dds
 	shown_in_ruler_designer = yes
 	ruler_designer_cost = 50
+	potential = {
+		trigger_if = {
+			limit = { exists = this }
+			OR = {
+				is_ai = no
+				NOT = { has_game_rule = bm_blood_knight_prevalence_player_only }
+			}
+		}
+	}
+	good = yes
+	# Use CK3's manual inheritance chances rather than its recessive genetic system.
+	inherit_chance = 25
+	both_parent_has_trait_inherit_chance = 100
 
-	genetic = no
+	# These values are percentages: 0.20 means 0.20% (1 in 500), not 20%.
+	# birth gives non-inheriting newborns a small chance to become a Blood Knight.
+	#tiger-ignore(key=validation) -- CK3's schema permits generation fields on inheritable traits.
+	birth = 0.20
+	# random_creation gives eligible randomly generated characters the same chance.
+	# CK3 1.19 allows this for inheritable or genetic traits; Tiger currently checks genetic only.
+	#tiger-ignore(key=validation) -- inherit_chance makes this trait inheritable without genetic = yes.
+	random_creation = 0.20
 
 	same_opinion = 10
 	prowess = 5
-	prowess_per_piety_level = 2
-	martial_per_piety_level = 1
-
 
 	tracks = {
 		vanguard = {
@@ -155,6 +172,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			20 = {
@@ -166,6 +184,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			30 = {
@@ -177,6 +196,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			40 = {
@@ -188,6 +208,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			50 = {
@@ -199,6 +220,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 				prowess_per_piety_level = 1
 			}
@@ -211,6 +233,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			70 = {
@@ -222,6 +245,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			80 = {
@@ -233,6 +257,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			90 = {
@@ -244,6 +269,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 			}
 			100 = {
@@ -255,6 +281,7 @@ lifestyle_blood_knight = {
 
 				# specific
 				prowess = 2
+				knight_limit = 1
 				knight_effectiveness_mult = 0.1
 				prowess_per_piety_level = 1
 			}
