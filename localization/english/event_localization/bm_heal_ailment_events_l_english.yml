@@ -14,10 +14,6 @@
   bm_heal_ailment.0001.incapable: "Restore Mental Faculty (Incapable)"
   bm_heal_ailment.0001.pneumonic: "Cure Pneumonia"
   bm_heal_ailment.0001.early_great_pox: "Purge Early Great Pox"
-  bm_heal_ailment.0001.infirm: "Rejuvenate Infirmity"
-  bm_heal_ailment.0001.withering_mind: "Restore Withering Mind"
-  bm_heal_ailment.0001.clouded_eyes: "Clear Clouded Eyes"
-  bm_heal_ailment.0001.fragile_bones: "Reinforce Fragile Bones"
   bm_heal_ailment.0001.maimed: "Regenerate Maimed Body"
   bm_heal_ailment.0001.consumption: "Cure Consumption"
   bm_heal_ailment.0001.typhus: "Cure Typhus"
@@ -43,7 +39,10 @@
   bm_heal_ailment.0001.ergotism: "Purge Ergotism"
   bm_heal_ailment.0001.disfigured: "Restore Disfigured Features"
   bm_heal_ailment.0001.one_legged: "Regenerate Lost Leg (One-legged)"
-  bm_heal_ailment.0001.faltering_heart: "Strengthen Faltering Heart"
+
+  # Stress Coping & Old Age
+  bm_heal_ailment.0001.purge_coping: "Purge Stress Vices (-50 Stress)"
+  bm_heal_ailment.0001.open_old_age: "Treat Old Age Afflictions..."
 
   # Cancel Option
   bm_heal_ailment.0001.cancel: "Decide against healing for now."

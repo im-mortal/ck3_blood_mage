@@ -10,7 +10,7 @@
   lifeforce_modifier_minor: "Minor Lifeforce"
   lifeforce_modifier_minor_desc: "A modest reservoir of vital essence gathered through minor blood rites, ready to be channeled or condensed."
 
-  lifeforce_modifier_major: "Lifeforce"
+  lifeforce_modifier_major: "Major Lifeforce"
   lifeforce_modifier_major_desc: "A potent reservoir of concentrated lifeforce harvested from mortal blood, ready to empower rites of education and lineage."
 
   lifeforce_modifier_negative_superior: "Cast Superior Blood Magic"
@@ -89,30 +89,55 @@
   lifedrained_me: "Lifedrained me"
   lifedrained_me_desc: "Lifedrained me"
 
-  # Dynasty modifiers
-  dynasty_blood_charisma_modifier: "Dynastic Blood Charisma"
-  dynasty_blood_charisma_modifier_desc: "Blood magic enhances the diplomatic prowess of your entire dynasty."
+  # Dynasty modifiers (3-Tier Covenants & Surges)
+  dynasty_blood_charisma_modifier_1: "Covenant of Majesty (Minor)"
+  dynasty_blood_charisma_modifier_1_desc: "Tier I (Minor): Blood magic enhances diplomacy, opinion, prestige, and personal schemes across your house."
+  dynasty_blood_charisma_modifier_2: "Covenant of Majesty (Major)"
+  dynasty_blood_charisma_modifier_2_desc: "Tier II (Major): Blood magic significantly strengthens diplomacy, renown, opinion, and personal scheme phase speed across your house."
+  dynasty_blood_charisma_modifier_3: "Covenant of Majesty (Superior)"
+  dynasty_blood_charisma_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Majesty grants peerless diplomatic influence, personal scheme capacity, and dynastic renown."
 
-  dynasty_blood_fury_modifier: "Dynastic Blood Fury"
-  dynasty_blood_fury_modifier_desc: "Your dynasty's warriors are empowered by blood magic in battle."
+  dynasty_blood_fury_modifier_1: "Covenant of Warband (Minor)"
+  dynasty_blood_fury_modifier_1_desc: "Tier I (Minor): Blood magic empowers warriors, knights, and travel safety across your house."
+  dynasty_blood_fury_modifier_2: "Covenant of Warband (Major)"
+  dynasty_blood_fury_modifier_2_desc: "Tier II (Major): Blood magic enhances martial prowess, advantage, army speed, and travel velocity across your house."
+  dynasty_blood_fury_modifier_3: "Covenant of Warband (Superior)"
+  dynasty_blood_fury_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Warband grants Men-at-Arms regiment size, lethal prowess, and battlefield dominance."
 
-  dynasty_blood_prosperity_modifier: "Dynastic Blood Prosperity"
-  dynasty_blood_prosperity_modifier_desc: "Blood-infused administration increases your dynasty's wealth and control."
+  dynasty_blood_prosperity_modifier_1: "Covenant of Prosperity (Minor)"
+  dynasty_blood_prosperity_modifier_1_desc: "Tier I (Minor): Blood-infused stewardship increases wealth, reduces army maintenance, and cuts construction costs for your house."
+  dynasty_blood_prosperity_modifier_2: "Covenant of Prosperity (Major)"
+  dynasty_blood_prosperity_modifier_2_desc: "Tier II (Major): Blood-infused stewardship bolsters income, holding and camp development, and building speed across your house."
+  dynasty_blood_prosperity_modifier_3: "Covenant of Prosperity (Superior)"
+  dynasty_blood_prosperity_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Prosperity expands domain capacity, holding wealth, and logistic mastery."
 
-  dynasty_blood_shadows_modifier: "Dynastic Blood Shadows"
-  dynasty_blood_shadows_modifier_desc: "Your dynasty excels in the shadows through blood-enhanced intrigue."
+  dynasty_blood_shadows_modifier_1: "Covenant of Shadow (Minor)"
+  dynasty_blood_shadows_modifier_1_desc: "Tier I (Minor): Blood magic accelerates hostile schemes and shields your house in protective shadows."
+  dynasty_blood_shadows_modifier_2: "Covenant of Shadow (Major)"
+  dynasty_blood_shadows_modifier_2_desc: "Tier II (Major): Blood magic bolsters intrigue, scheme speed, dread, and caps enemy plot success against your house."
+  dynasty_blood_shadows_modifier_3: "Covenant of Shadow (Superior)"
+  dynasty_blood_shadows_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Shadow grants hostile scheme capacity, impenetrable secrecy, and dark mastery."
 
-  dynasty_blood_insight_modifier: "Dynastic Blood Insight"
-  dynasty_blood_insight_modifier_desc: "Blood magic bestows arcane knowledge upon your dynasty."
+  dynasty_blood_insight_modifier_1: "Covenant of Insight (Minor)"
+  dynasty_blood_insight_modifier_1_desc: "Tier I (Minor): Blood magic bestows arcane knowledge, piety, stress resilience, and cultural acceptance upon your house."
+  dynasty_blood_insight_modifier_2: "Covenant of Insight (Major)"
+  dynasty_blood_insight_modifier_2_desc: "Tier II (Major): Blood magic accelerates learning, piety generation, stress composure, and devotion impact across your house."
+  dynasty_blood_insight_modifier_3: "Covenant of Insight (Superior)"
+  dynasty_blood_insight_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Insight grants learning per devotion level, deep piety, and spiritual transcendence."
 
-  dynasty_blood_resilience_modifier: "Dynastic Blood Resilience"
-  dynasty_blood_resilience_modifier_desc: "Blood magic strengthens your dynasty's vitality and endurance."
+  dynasty_blood_legacy_modifier_1: "Covenant of Legacy (Minor)"
+  dynasty_blood_legacy_modifier_1_desc: "Tier I (Minor): Blood magic fortifies your bloodline with fertility, longevity, health, and positive congenital trait inheritance."
+  dynasty_blood_legacy_modifier_2: "Covenant of Legacy (Major)"
+  dynasty_blood_legacy_modifier_2_desc: "Tier II (Major): Blood magic deeply strengthens genetic potential, health, life expectancy, and wards against inbreeding."
+  dynasty_blood_legacy_modifier_3: "Covenant of Legacy (Superior)"
+  dynasty_blood_legacy_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Legacy bestows superhuman genetic perfection, longevity, and severe inbreeding reduction."
 
-  dynasty_blood_legacy_modifier: "Dynastic Blood Legacy"
-  dynasty_blood_legacy_modifier_desc: "Your dynasty's bloodline is magically fortified against weakness."
-
-  dynasty_blood_expertise_modifier: "Dynastic Blood Expertise"
-  dynasty_blood_expertise_modifier_desc: "Blood magic accelerates your dynasty's aptitude for learning."
+  dynasty_blood_expertise_modifier_1: "Covenant of Mastery (Minor)"
+  dynasty_blood_expertise_modifier_1_desc: "Tier I (Minor): Blood magic accelerates lifestyle experience and language learning across your house."
+  dynasty_blood_expertise_modifier_2: "Covenant of Mastery (Major)"
+  dynasty_blood_expertise_modifier_2_desc: "Tier II (Major): Blood magic bolsters lifestyle mastery, language capacity, and imperial fame scaling across your house."
+  dynasty_blood_expertise_modifier_3: "Covenant of Mastery (Superior)"
+  dynasty_blood_expertise_modifier_3_desc: "Tier III (Superior): The perfected Covenant of Mastery grants lifestyle experience, fame impact, and eliminates cultural friction."
 
   # Personal modifiers
   blood_charisma_modifier: "Blood Charisma"
@@ -144,36 +169,30 @@
   trait_drained_attempted_modifier_desc: "My body is weak from the recently attempted drain"
 
   # Major, temporary buffs (fallback so you can always get something)
-  temporary_buff_bloodline: "Bloodline Blood Empowered"
-  temporary_buff_bloodline_desc: "Bloodline Blood Empowered"
-
   temporary_buff_self: "Blood Empowered"
   temporary_buff_self_desc: "Blood Empowered"
 
   # Attunement modifiers
   ancient_attuned: "Attuned to Ancient"
-  ancient_attuned_desc: "Yearly chance to gain experience in the Ancient discipline, while passively channeling ancient piety and devotion."
+  ancient_attuned_desc: "Grants +1 yearly exp in Ancient."
 
   enlightenment_attuned: "Attuned to Enlightenment"
-  enlightenment_attuned_desc: "Yearly chance to gain experience in the Enlightenment discipline, while passively boosting lifestyle experience gain."
+  enlightenment_attuned_desc: "Grants +1 yearly exp in Enlightenment."
 
   bloodline_attuned: "Attuned to Bloodline"
-  bloodline_attuned_desc: "Yearly chance to gain experience in the Bloodline discipline, while passively bolstering dynasty prestige."
+  bloodline_attuned_desc: "Grants +1 yearly exp in Bloodline."
 
   benediction_attuned: "Attuned to Benediction"
-  benediction_attuned_desc: "Yearly chance to gain experience in the Benediction discipline, while passively enhancing general opinion and prestige."
+  benediction_attuned_desc: "Grants +1 yearly exp in Benediction."
 
   hematurgy_attuned: "Attuned to Hematurgy"
-  hematurgy_attuned_desc: "Yearly chance to gain experience in the Hematurgy discipline, while passively disrupting enemy hostile schemes."
+  hematurgy_attuned_desc: "Grants +1 yearly exp in Hematurgy."
 
   vanguard_attuned: "Attuned to Vanguard"
-  vanguard_attuned_desc: "Yearly chance to gain experience in the Vanguard discipline, while passively granting combat advantage and knight effectiveness."
+  vanguard_attuned_desc: "Grants +1 yearly exp in Vanguard."
 
   slaughter_attuned: "Attuned to Slaughter"
-  slaughter_attuned_desc: "Yearly chance to gain experience in the Slaughter discipline, while passively granting prowess and dread gain."
-
-  resilience_attuned: "Attuned to Resilience"
-  resilience_attuned_desc: "Yearly chance to bolster resilience, while passively reinforcing physical health and epidemic resistance."
+  slaughter_attuned_desc: "Grants +1 yearly exp in Slaughter."
 
   # Bloodline buffs
   bm_blessed_blood_modifier: "Blessed Blood"
@@ -182,3 +201,29 @@
   # Hematurgy Blood Curse
   bm_blood_curse_modifier: "Blood Curse"
   bm_blood_curse_modifier_desc: "This character has been afflicted by a malefic hemomantic curse, sapping their vitality, prowess, and cognitive faculties."
+
+  # 1. Vegvisir (The Wayfinder)
+  bm_stave_vegvisir: "Vegvísir"
+  bm_stave_vegvisir_desc: "The wayfinder stave etched into flesh. Increases travel speed, travel safety, and movement speed.\n\n#bold Superior Capstone — Storm-Walker#!: Halves the cooldown of Blood Hunt (6 months landed, 1.5 years wanderer or knight) and guarantees completely safe harvest outcomes without negative hazards."
+
+  # 2. Aegishjalmur (Helm of Awe)
+  bm_stave_aegishjalmur: "Ægishjálmur"
+  bm_stave_aegishjalmur_desc: "The helm of awe stave etched across the brow and chest. Increases prowess, advantage, and knight effectiveness.\n\n#bold Superior Capstone — Terror of the Slain#!: In battles and single combat duels, strikes fear into the hearts of enemy commanders and champions, inflicting severe terror and reducing their prowess and health."
+
+  bm_aegishjalmur_terror_modifier: "Struck by Terror"
+  bm_aegishjalmur_terror_modifier_desc: "This warrior has faced the bearer of the perfected Helm of Awe, breaking their spirit and severely degrading their combat prowess and constitution."
+
+  # 3. Feingur (Awakened Seed)
+  bm_stave_feingur: "Feingur"
+  bm_stave_feingur_desc: "The fertility and lineage stave etched into flesh. Increases fertility, fertile years, congenital trait inheritance, character health, and epidemic resistance.\n\n#bold Superior Capstone — Awakened Seed#!: Doubles discipline XP gained on childbirth (+4 base, +8 if inherited; Bloodline for Mages, Vanguard for Knights). Unlocks an interaction to bestow a permanent runic blessing upon dynasty kin."
+
+  bm_feingur_blessed_blood_modifier: "Awakened Runic Bloodline"
+  bm_feingur_blessed_blood_modifier_desc: "The vital currents of Feingur have been permanently woven into this character's flesh, granting permanent physical perfection, cognitive sharpness, and high fertility."
+
+  # 4. Nabrokarstafur (Flayed Tithe)
+  bm_stave_nabrokarstafur: "Nábrókarstafur"
+  bm_stave_nabrokarstafur_desc: "The flayed tithe stave etched into flesh. Increases domain tax and lowers Men-at-Arms maintenance at the expense of general opinion.\n\n#bold Superior Capstone — Flayed Tithe#!: Yields #P +20 Gold#! per Point of Interest visited during travel, and claims #P 10%#! of enemy fatal casualties as gold (25–250 Gold) upon winning any battle."
+
+  # 5. Hulinhjalmur (Unseen Shroud)
+  bm_stave_hulinhjalmur: "Hulinhjálmur"
+  bm_stave_hulinhjalmur_desc: "The unseen shroud stave etched into flesh. Increases hostile scheme success chance, reduces enemy scheme success, and boosts monthly lifestyle experience.\n\n#bold Superior Capstone — Unseen Shroud#!: Doubles yearly discipline Attunement experience gain to #P +2 XP#! per year, and successfully executing a Murder scheme harvests #P 1 Major Lifeforce#!."

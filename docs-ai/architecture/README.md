@@ -1,49 +1,30 @@
-# Architecture Docs Index
+# Mod architecture & subsystem index
 
-Rules (`.agents/rules/`) say how to write CK3 script in general. These docs say how this mod implements things. Read the doc matching the code you are changing, and update it in the same change (see `AGENTS.md` in this folder). All architecture docs follow high-density caveman style: executive summaries, master tables, costs, requirements, XP gains, benefits; zero roleplay fluff.
+Architecture specs for the **Blood Mages** mod (CK3 1.20.*). Living specs of current state only; see `AGENTS.md` in this directory for authoring rules.
 
-## Path to Doc
+## Subsystem directory
 
-| Path | Doc |
-| --- | --- |
-| `common/story_cycles/bm_blood_mage_story.txt`, `bm_blood_mage_story_list_effects.txt`, `bm_blood_mage_story_values.txt` | `blood-mage-story.md` |
-| `common/decisions/bm_*` | `blood-mage-decisions.md` |
-| `common/character_interactions/bm_*` | `blood-mage-interactions.md` |
-| `common/traits/bm_*_trait.txt` | `blood-mage-traits.md`, `blood-mage-blood-empowerment.md`, `blood-mage-blood-knight.md` |
-| `common/scripted_effects/bm_trait_track_xp_gain_effects.txt`, `common/script_values/bm_xp_requirement_values.txt`, `bm_cure_illness_values.txt`, `bm_drain_piety_cost.txt` | `blood-mage-track-xp.md` |
-| `common/on_action/bm_blood_mage_prevalence_on_actions.txt`, `bm_yearly_pulse.txt`, `common/scripted_effects/bm_blood_mage_lifecycle_effects.txt` | `blood-mage-prevalence-and-lifecycle.md` |
-| `common/game_rules/bm_game_rules.txt` | `blood-mage-game-rules.md` |
-| `common/modifiers/bm_lifeforce.txt`, `bm_blood_magic_*_effects.txt` | `blood-mage-lifeforce.md` |
-| `common/buildings/bm_duchy_buildings.txt`, `common/modifiers/bm_blood_runes_modifiers.txt` | `blood-mage-blood-runes.md` |
-| `common/domiciles/buildings/bm_domicile_buildings.txt`, `common/modifiers/bm_domicile_modifiers.txt` | `blood-mage-domicile-buildings.md` |
-| `bm_golem_duel_effect.txt`, `bm_create_blood_golem.txt`, `events/bm_blood_golem_events.txt` | `blood-mage-golems.md` |
-| `common/dynasty_houses/`, `common/dynasties/`, `bm_channel_dynasty_modifiers.txt` | `blood-mage-dynasty.md` |
-| `bm_drain_trait_effects.txt`, `bm_education_duel_effect.txt`, `common/script_values/bm_drain_duel_values.txt` | `blood-mage-duels-and-education.md` |
-| `events/bm_*` | `blood-mage-events-overview.md` |
-| `common/decisions/bm_*`, `common/character_interactions/bm_*` | `blood-mage-magic-tiers.md` |
-| `common/religion/**`, `bm_religion_conversion_effects.txt`, `bm_reformation_repair_*` | `blood-mage-religions.md` |
-| `common/scripted_triggers/bm_triggers.txt`, `common/opinion_modifiers/`, `common/nicknames/`, `common/deathreasons/`, `gui/*texticons*` | `blood-mage-shared-scripting.md` |
-
-## Docs Reference
-
-| Doc | Coverage |
-| --- | --- |
-| `blood-mage-magic-tiers.md` | Complete breakdown of Minor, Major, and Superior Blood Magic: requirements, costs, XP gains, effects, and class access (Knights = Minor/Major; Mages = Minor/Major/Superior) |
-| `blood-mage-traits.md` | Core lifestyle traits, 12 tracks cumulative benefits (10/50/100 XP), milestones, acquisition triggers |
-| `blood-mage-blood-empowerment.md` | `lifestyle_blood_empowerment` trait, 5 tracks master table, costs, spell unlocks, retinue |
-| `blood-mage-blood-knight.md` | `lifestyle_blood_knight` trait, 3 tracks master table, Lifeforce empowerments, combat & duel hooks |
-| `blood-mage-track-xp.md` | Master XP catalog across all tracks: piety costs, lifeforce requirements, ritual gates, XP yields |
-| `blood-mage-dynasty.md` | 7 house modifiers, costs, cooldowns, yearly XP loop, Golem cadet house |
-| `blood-mage-domicile-buildings.md` | Single 5-tier Blood Shrine line, scaling piety/health/lifespan/genetics, camp & court aura |
-| `blood-mage-blood-runes.md` | Blood Runes tiers 1-3, costs, requirements, passive rolls, Blood Universities 0-3 |
-| `blood-mage-decisions.md` | Master decisions table: panels, costs, cooldowns, requirements, XP gains, effects |
-| `blood-mage-duels-and-education.md` | Duels, trait drain, education upgrades/re-spec, mass lifedrain, exact XP gates |
-| `blood-mage-events-overview.md` | Complete event namespace, trigger, and outcome matrix across all event files |
-| `blood-mage-game-rules.md` | Master game rules table: all 5 campaign rules, settings, and behavioral impacts |
-| `blood-mage-golems.md` | Golem lifecycle matrix: creation costs, stat template, shaping duels, roster management |
-| `blood-mage-interactions.md` | Master character interactions table: target filters, costs, cooldowns, XP gains, effects |
-| `blood-mage-lifeforce.md` | Lifeforce modifiers table: Minor/Medium/Major bonuses, sources and sinks matrix |
-| `blood-mage-prevalence-and-lifecycle.md` | Prevalence rules matrix, birth pipeline diagram, trait inheritance rates, lifecycle effects |
-| `blood-mage-religions.md` | Blóðtrú religious family, 3 faiths, rites, holy site hierarchy, identity doctrine, cult decisions |
-| `blood-mage-shared-scripting.md` | Shared triggers, opinion modifiers, death reasons, text icons, overhaul compat guards |
-| `blood-mage-story.md` | `bm_blood_mage_story` cycle, Situation panel, rosters (dynasty mages, golems, retinue) |
+| Document | Topic | Key Files |
+| --- | --- | --- |
+| [`blood-mage-magic-tiers.md`](blood-mage-magic-tiers.md) | Minor, Major, Superior Blood Magic tiers | `common/decisions/cast_magic/` |
+| [`blood-mage-traits.md`](blood-mage-traits.md) | Lifestyle traits: Mage, Knight, Power | `common/traits/bm_*_trait.txt` |
+| [`blood-mage-blood-knight.md`](blood-mage-blood-knight.md) | Blood Knight mechanics, combat hooks, MaA | `common/men_at_arms_types/` |
+| [`blood-mage-blood-power.md`](blood-mage-blood-power.md) | Secondary Power trait, 6 progression tracks | `common/traits/bm_power_trait.txt` |
+| [`blood-mage-track-xp.md`](blood-mage-track-xp.md) | XP master hub & shared tracks (`ancient`, `enlightenment`, `benediction`) | `common/scripted_effects/bm_trait_track_xp_gain_effects.txt` |
+| [`blood-mage-track-xp-mage.md`](blood-mage-track-xp-mage.md) | Blood Mage XP tracks (`bloodline`, `hematurgy`) | `common/scripted_effects/bm_trait_track_xp_gain_effects.txt` |
+| [`blood-mage-track-xp-knight.md`](blood-mage-track-xp-knight.md) | Blood Knight XP tracks (`vanguard`, `slaughter`) | `common/scripted_effects/bm_trait_track_xp_gain_effects.txt` |
+| [`blood-mage-track-xp-power.md`](blood-mage-track-xp-power.md) | Blood Power XP tracks (6 secondary tracks) | `common/scripted_effects/bm_trait_track_xp_gain_effects.txt` |
+| [`blood-mage-lifeforce.md`](blood-mage-lifeforce.md) | Lifeforce resource, modifiers, sinks & sources | `common/modifiers/bm_lifeforce.txt` |
+| [`blood-mage-blood-runes.md`](blood-mage-blood-runes.md) | 5 Galdrastafir staves, capstones, Duchy Temples | `common/modifiers/bm_blood_runes_modifiers.txt`, `common/buildings/` |
+| [`blood-mage-decisions.md`](blood-mage-decisions.md) | Decisions catalog, costs, requirements | `common/decisions/` |
+| [`blood-mage-interactions.md`](blood-mage-interactions.md) | Character interactions, healing, trait theft | `common/character_interactions/` |
+| [`blood-mage-duels-and-education.md`](blood-mage-duels-and-education.md) | Initiation duels, congenital traits, education | `events/bm_duel_events.txt` |
+| [`blood-mage-golems.md`](blood-mage-golems.md) | Blood Golems lifecycle, creation, house roster | `events/bm_blood_golem_events.txt` |
+| [`blood-mage-dynasty.md`](blood-mage-dynasty.md) | Dynasty house modifiers, bloodline mechanics | `common/dynasties/`, `common/dynasty_houses/` |
+| [`blood-mage-domicile-buildings.md`](blood-mage-domicile-buildings.md) | 5-tier Blood Shrine line (camp & estate) | `common/domiciles/buildings/` |
+| [`blood-mage-religions.md`](blood-mage-religions.md) | Blóðtrú religion family, rites, holy sites | `common/religion/` |
+| [`blood-mage-story.md`](blood-mage-story.md) | Blood Magic Situation panel & story cycles | `common/story_cycles/` |
+| [`blood-mage-prevalence-and-lifecycle.md`](blood-mage-prevalence-and-lifecycle.md) | Trait distribution, inheritance, pulses | `common/on_action/` |
+| [`blood-mage-game-rules.md`](blood-mage-game-rules.md) | Campaign game rules & settings | `common/game_rules/` |
+| [`blood-mage-events-overview.md`](blood-mage-events-overview.md) | Event mapping across all namespaces | `events/` |
+| [`blood-mage-shared-scripting.md`](blood-mage-shared-scripting.md) | Shared triggers, opinion modifiers, nicknames | `common/scripted_triggers/` |

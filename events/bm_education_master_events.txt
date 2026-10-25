@@ -6,10 +6,19 @@ bm_education_master.001 = {
 	desc = bm_education_master.001.desc
 	theme = witchcraft
 
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
 	# Diplomacy education mastery
 	option = {
 		name = bm_education_master.001.diplomacy
 		trigger = {
+			has_trait = education_diplomacy_4
+			piety_level >= 4
+		}
+		show_as_unavailable = {
 			has_trait = education_diplomacy_4
 		}
 		education_master_duel_effect = { trait = diplomacy }
@@ -21,6 +30,10 @@ bm_education_master.001 = {
 		name = bm_education_master.001.martial
 		trigger = {
 			has_trait = education_martial_4
+			piety_level >= 4
+		}
+		show_as_unavailable = {
+			has_trait = education_martial_4
 		}
 		education_master_duel_effect = { trait = martial }
 		ai_chance = { base = 100 }
@@ -30,6 +43,10 @@ bm_education_master.001 = {
 	option = {
 		name = bm_education_master.001.stewardship
 		trigger = {
+			has_trait = education_stewardship_4
+			piety_level >= 4
+		}
+		show_as_unavailable = {
 			has_trait = education_stewardship_4
 		}
 		education_master_duel_effect = { trait = stewardship }
@@ -41,6 +58,10 @@ bm_education_master.001 = {
 		name = bm_education_master.001.intrigue
 		trigger = {
 			has_trait = education_intrigue_4
+			piety_level >= 4
+		}
+		show_as_unavailable = {
+			has_trait = education_intrigue_4
 		}
 		education_master_duel_effect = { trait = intrigue }
 		ai_chance = { base = 100 }
@@ -51,13 +72,21 @@ bm_education_master.001 = {
 		name = bm_education_master.001.learning
 		trigger = {
 			has_trait = education_learning_4
+			piety_level >= 4
+		}
+		show_as_unavailable = {
+			has_trait = education_learning_4
 		}
 		education_master_duel_effect = { trait = learning }
 		ai_chance = { base = 100 }
 	}
 
-	left_portrait = {
-		character = root
-		animation = personality_rational
+	# Back
+	option = {
+		name = bm_education_master.001.back
+		trigger = {
+			is_ai = no
+		}
+		ai_chance = { base = 0 }
 	}
 }

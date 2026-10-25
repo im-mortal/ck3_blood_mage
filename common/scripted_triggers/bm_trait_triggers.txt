@@ -1,30 +1,33 @@
 ﻿# Scripted triggers for Blood Mage trait and location requirements
 
 bm_can_drain_traits_from_target_trigger = {
-	OR = {
-		AND = {
-			NOT = { has_trait_rank = { trait = intellect_good rank >= 5 } }
-			scope:recipient = { has_trait = intellect_good }
-		}
-		AND = {
-			NOT = { has_trait_rank = { trait = physique_good rank >= 5 } }
-			scope:recipient = { has_trait = physique_good }
-		}
-		AND = {
-			NOT = { has_trait_rank = { trait = beauty_good rank >= 5 } }
-			scope:recipient = { has_trait = beauty_good }
-		}
-		AND = {
-			NOT = { has_trait = fecund }
-			scope:recipient = { has_trait = fecund }
-		}
-		AND = {
-			NOT = { has_trait = giant }
-			scope:recipient = { has_trait = giant }
-		}
-		AND = {
-			NOT = { has_trait = pure_blooded }
-			scope:recipient = { has_trait = pure_blooded }
+	custom_description = {
+		text = bm_can_drain_traits_from_target_trigger_tt
+		OR = {
+			AND = {
+				NOT = { has_trait_rank = { trait = intellect_good rank >= 5 } }
+				scope:recipient = { has_trait = intellect_good }
+			}
+			AND = {
+				NOT = { has_trait_rank = { trait = physique_good rank >= 5 } }
+				scope:recipient = { has_trait = physique_good }
+			}
+			AND = {
+				NOT = { has_trait_rank = { trait = beauty_good rank >= 5 } }
+				scope:recipient = { has_trait = beauty_good }
+			}
+			AND = {
+				NOT = { has_trait = fecund }
+				scope:recipient = { has_trait = fecund }
+			}
+			AND = {
+				NOT = { has_trait = giant }
+				scope:recipient = { has_trait = giant }
+			}
+			AND = {
+				NOT = { has_trait = pure_blooded }
+				scope:recipient = { has_trait = pure_blooded }
+			}
 		}
 	}
 }
@@ -41,31 +44,72 @@ bm_has_valuable_genetic_trait_trigger = {
 	}
 }
 
-bm_has_blood_empowerment_xp_trigger = {
+bm_has_blood_power_xp_trigger = {
 	OR = {
 		has_trait_xp = {
-			trait = lifestyle_blood_empowerment
+			trait = lifestyle_blood_power
 			track = dynasty
 			value >= $VALUE$
 		}
 		has_trait_xp = {
-			trait = lifestyle_blood_empowerment
+			trait = lifestyle_blood_power
+			track = fury
+			value >= $VALUE$
+		}
+		has_trait_xp = {
+			trait = lifestyle_blood_power
 			track = mastery
 			value >= $VALUE$
 		}
 		has_trait_xp = {
-			trait = lifestyle_blood_empowerment
+			trait = lifestyle_blood_power
 			track = presence
 			value >= $VALUE$
 		}
 		has_trait_xp = {
-			trait = lifestyle_blood_empowerment
+			trait = lifestyle_blood_power
 			track = prosperity
 			value >= $VALUE$
 		}
 		has_trait_xp = {
-			trait = lifestyle_blood_empowerment
+			trait = lifestyle_blood_power
 			track = shadows
+			value >= $VALUE$
+		}
+	}
+}
+
+bm_has_blood_empowerment_xp_trigger = {
+	bm_has_blood_power_xp_trigger = {
+		VALUE = $VALUE$
+	}
+}
+
+bm_has_blood_knight_xp_trigger = {
+	OR = {
+		has_trait_xp = {
+			trait = lifestyle_blood_knight
+			track = vanguard
+			value >= $VALUE$
+		}
+		has_trait_xp = {
+			trait = lifestyle_blood_knight
+			track = slaughter
+			value >= $VALUE$
+		}
+		has_trait_xp = {
+			trait = lifestyle_blood_knight
+			track = ancient
+			value >= $VALUE$
+		}
+		has_trait_xp = {
+			trait = lifestyle_blood_knight
+			track = benediction
+			value >= $VALUE$
+		}
+		has_trait_xp = {
+			trait = lifestyle_blood_knight
+			track = enlightenment
 			value >= $VALUE$
 		}
 	}
@@ -131,3 +175,61 @@ bm_geyser_duel_has_bad_traits_trigger = {
 		has_trait = physique_bad
 	}
 }
+
+bm_has_rank_1_education_trigger = {
+	OR = {
+		has_trait = education_diplomacy_1
+		has_trait = education_martial_1
+		has_trait = education_stewardship_1
+		has_trait = education_intrigue_1
+		has_trait = education_learning_1
+	}
+}
+
+bm_has_rank_2_education_trigger = {
+	OR = {
+		has_trait = education_diplomacy_2
+		has_trait = education_martial_2
+		has_trait = education_stewardship_2
+		has_trait = education_intrigue_2
+		has_trait = education_learning_2
+	}
+}
+
+bm_has_rank_3_education_trigger = {
+	OR = {
+		has_trait = education_diplomacy_3
+		has_trait = education_martial_3
+		has_trait = education_stewardship_3
+		has_trait = education_intrigue_3
+		has_trait = education_learning_3
+	}
+}
+
+bm_has_rank_4_education_trigger = {
+	OR = {
+		has_trait = education_diplomacy_4
+		has_trait = education_martial_4
+		has_trait = education_stewardship_4
+		has_trait = education_intrigue_4
+		has_trait = education_learning_4
+	}
+}
+
+bm_can_enhance_education_devotion_trigger = {
+	OR = {
+		AND = {
+			bm_has_rank_1_education_trigger = yes
+			piety_level >= 1
+		}
+		AND = {
+			bm_has_rank_2_education_trigger = yes
+			piety_level >= 2
+		}
+		AND = {
+			bm_has_rank_3_education_trigger = yes
+			piety_level >= 3
+		}
+	}
+}
+

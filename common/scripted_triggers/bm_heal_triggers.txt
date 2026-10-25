@@ -14,10 +14,6 @@ bm_has_major_ailment_trigger = {
 		has_trait = incapable
 		has_trait = pneumonic
 		has_trait = early_great_pox
-		has_trait = infirm
-		has_trait = withering_mind
-		has_trait = clouded_eyes
-		has_trait = fragile_bones
 		has_trait = maimed
 		has_trait = consumption
 		has_trait = typhus
@@ -29,6 +25,16 @@ bm_has_major_ailment_trigger = {
 		has_trait = possessed_1
 		has_trait = dull
 		has_trait = depressed_1
+	}
+}
+
+bm_has_old_age_ailment_trigger = {
+	OR = {
+		has_trait = infirm
+		has_trait = withering_mind
+		has_trait = clouded_eyes
+		has_trait = fragile_bones
+		has_trait = faltering_heart
 	}
 }
 
@@ -46,7 +52,15 @@ bm_has_deadly_ailment_trigger = {
 		has_trait = ergotism
 		has_trait = disfigured
 		has_trait = one_legged
-		has_trait = faltering_heart
+	}
+}
+
+bm_has_non_old_age_ailment_trigger = {
+	OR = {
+		bm_has_minor_ailment_trigger = yes
+		bm_has_major_ailment_trigger = yes
+		bm_has_deadly_ailment_trigger = yes
+		bm_has_stress_coping_trait_trigger = yes
 	}
 }
 
@@ -55,5 +69,26 @@ bm_has_any_ailment_trigger = {
 		bm_has_minor_ailment_trigger = yes
 		bm_has_major_ailment_trigger = yes
 		bm_has_deadly_ailment_trigger = yes
+		bm_has_old_age_ailment_trigger = yes
+		bm_has_stress_coping_trait_trigger = yes
 	}
+}
+
+bm_can_heal_character_trigger = {
+	is_alive = yes
+	OR = {
+		scope:actor = {
+			OR = {
+				has_trait = lifestyle_blood_mage
+				has_trait = lifestyle_blood_knight
+			}
+		}
+		root = {
+			OR = {
+				has_trait = lifestyle_blood_mage
+				has_trait = lifestyle_blood_knight
+			}
+		}
+	}
+	bm_has_any_ailment_trigger = yes
 }

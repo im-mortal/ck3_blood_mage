@@ -7,13 +7,19 @@
     is_shown = {
         has_trait = witch
         NOT = { has_trait = lifestyle_blood_mage }
+        NOT = { has_trait = lifestyle_blood_knight }
     }
 
     effect = {
         debug_log = "BloodMageDecision: convert_from_witch"
         debug_log_scopes = yes
-        remove_trait = witch
-        bm_become_blood_mage_effect = yes
+        send_interface_toast = {
+            type = event_toast_effect_good
+            title = convert_to_blood_magic_from_witch
+            left_icon = root
+            remove_trait = witch
+            bm_become_blood_mage_effect = yes
+        }
         custom_tooltip = convert_to_blood_magic_from_witch.tooltip
     }
     ai_will_do = { base = 0 }

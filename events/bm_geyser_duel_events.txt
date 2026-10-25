@@ -61,6 +61,7 @@ bm_geyser_duel.0001 = {
 						trait = education_martial_4
 						trait = lifestyle_blood_mage
 						trait = lifestyle_blood_knight
+						trait = lifestyle_blood_power
 						trait = lifestyle_poet
 						trait = lifestyle_blademaster
 						trait = lifestyle_hunter
@@ -102,6 +103,7 @@ bm_geyser_duel.0001 = {
 						trait = education_martial_4
 						trait = lifestyle_blood_mage
 						trait = lifestyle_blood_knight
+						trait = lifestyle_blood_power
 						trait = lifestyle_poet
 						trait = lifestyle_blademaster
 						trait = lifestyle_hunter
@@ -139,6 +141,7 @@ bm_geyser_duel.0001 = {
 						trait = education_martial_4
 						trait = lifestyle_blood_mage
 						trait = lifestyle_blood_knight
+						trait = lifestyle_blood_power
 						trait = lifestyle_poet
 						trait = lifestyle_blademaster
 						trait = lifestyle_hunter
@@ -418,8 +421,8 @@ bm_geyser_duel.0001 = {
 			NOT = { has_trait = lifestyle_blood_mage }
 			NOT = { has_trait = lifestyle_blood_knight }
 			OR = {
-				has_character_flag = bm_geyser_paid_prestige
-				prestige_level >= 2
+				has_character_flag = bm_geyser_paid_piety
+				piety_level >= 2
 			}
 		}
 		show_as_unavailable = {
@@ -427,9 +430,9 @@ bm_geyser_duel.0001 = {
 		}
 
 		if = {
-			limit = { NOT = { has_character_flag = bm_geyser_paid_prestige } }
-			add_prestige_level = -1
-			add_character_flag = bm_geyser_paid_prestige
+			limit = { NOT = { has_character_flag = bm_geyser_paid_piety } }
+			add_piety_level = -1
+			add_character_flag = bm_geyser_paid_piety
 		}
 
 		duel = {
@@ -586,7 +589,6 @@ bm_geyser_duel.0001 = {
 			else = {
 				remove_character_flag = bm_geyser_retried
 				remove_character_flag = bm_geyser_paid_piety
-				remove_character_flag = bm_geyser_paid_prestige
 				if = {
 					limit = { exists = scope:bm_geyser_wise_one }
 					scope:bm_geyser_wise_one = {

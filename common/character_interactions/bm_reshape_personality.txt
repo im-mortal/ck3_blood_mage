@@ -1,0 +1,120 @@
+﻿bm_reshape_personality_interaction = {
+	category = interaction_category_bm_blood_magic
+	icon = bm_reshape_personality_interaction
+	desc = bm_reshape_personality_interaction_desc
+	common_interaction = yes
+	interface_priority = 205
+
+	cooldown_against_recipient = { years = 5 }
+
+	is_shown = {
+		scope:actor = {
+			OR = {
+				has_trait = lifestyle_blood_mage
+				has_trait = lifestyle_blood_knight
+			}
+		}
+		scope:recipient = {
+			is_alive = yes
+			NOT = { this = scope:actor }
+			bm_is_valid_positive_magic_target_trigger = { ACTOR = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:actor = {
+			custom_tooltip = {
+				text = bm_reshape_personality_piety_level_tt
+				piety_level >= 3
+			}
+			custom_tooltip = {
+				text = bm_reshape_personality_lifeforce_tt
+				has_character_modifier = lifeforce_modifier_major
+			}
+		}
+		scope:recipient = {
+			custom_tooltip = {
+				text = bm_influence_personality_failure_cooldown_tt
+				NOT = { var:bm_influence_personality_failed_actor ?= scope:actor }
+			}
+		}
+		custom_tooltip = {
+			text = bm_reshape_personality_can_influence_tt
+			OR = {
+				NOT = { scope:recipient.culture = scope:actor.culture }
+				AND = {
+					scope:recipient = {
+						any_character_trait = {
+							has_trait_category = personality
+						}
+					}
+					scope:actor = {
+						any_character_trait = {
+							has_trait_category = personality
+							NOT = { scope:recipient = { has_trait = prev } }
+						}
+					}
+				}
+			}
+		}
+	}
+
+	cost = {
+		piety = 250
+	}
+
+	on_accept = {
+		debug_log = "BloodMageInteraction: bm_reshape_personality | Actor: [actor.GetShortUINameNoTooltip] (ID:[actor.GetID], [Select_CString(actor.IsPlayer, 'Player', 'AI')]) -> Recipient: [recipient.GetShortUINameNoTooltip] (ID:[recipient.GetID], [Select_CString(recipient.IsPlayer, 'Player', 'AI')]) | Rel: [actor.Custom2('RelationToMeShort', recipient)] | Tag: [actor.Custom2('bm_debug_relation_tags', recipient)] | Opinion: [actor.GetOpinionOf( recipient )]"
+		scope:actor = {
+			trigger_event = bm_reshape_personality.0001
+		}
+	}
+
+	auto_accept = yes
+	ai_accept = { base = 100 }
+	ai_potential = { always = yes }
+	ai_targets = {
+		ai_recipients = spouses
+		ai_recipients = family
+		ai_recipients = children
+		ai_recipients = courtiers
+		ai_recipients = scripted_relations
+	}
+	ai_frequency = 24
+	ai_will_do = {
+		base = 10
+		modifier = {
+			factor = 0
+			OR = {
+				has_relation_rival = scope:recipient
+				has_relation_nemesis = scope:recipient
+			}
+		}
+		modifier = {
+			factor = 0
+			opinion = {
+				target = scope:recipient
+				value < 40
+			}
+		}
+		modifier = {
+			factor = 0
+			piety < 500
+		}
+		modifier = {
+			factor = 0.2
+			scope:actor.learning < scope:recipient.learning
+		}
+		modifier = {
+			add = 10
+			has_relation_friend = scope:recipient
+		}
+		modifier = {
+			add = 20
+			OR = {
+				has_relation_soulmate = scope:recipient
+				is_spouse_of = scope:recipient
+			}
+		}
+	}
+}

@@ -4,8 +4,8 @@
 
 - **What:** Lifecycle, birth inheritance, world-wide population scaling, and yearly cleanup audits for Blood Mages and Blood Knights.
 - **Mandatory Entry Effects:**
-  - Blood Mage: `bm_become_blood_mage_effect`. Adds `lifestyle_blood_mage`, initializes story cycle `bm_blood_mage_story`, sets flag `bm_blood_mage_prevalence_reviewed`.
-  - Blood Knight: `bm_become_blood_knight_effect`. Adds `lifestyle_blood_knight`, initializes story cycle `bm_blood_mage_story`, sets flag `bm_blood_knight_prevalence_reviewed`.
+  - Blood Mage: `bm_become_blood_mage_effect`. Adds `lifestyle_blood_mage` and base `lifestyle_blood_power`, initializes story cycle `bm_blood_mage_story`, sets flag `bm_blood_mage_prevalence_reviewed`.
+  - Blood Knight: `bm_become_blood_knight_effect`. Adds `lifestyle_blood_knight` and base `lifestyle_blood_power`, initializes story cycle `bm_blood_mage_story`, sets flag `bm_blood_knight_prevalence_reviewed`.
 - **Prevalence Audits:** Evaluated at birth (`on_birth_child`), game start (`on_game_start_after_lobby`), and yearly pulse (`random_yearly_everyone_pulse`). Strips traits from AI characters if rules restrict prevalence (`player_only`, `one_in_10000`, `one_in_1000`).
 
 ### Prevalence Behavior Matrix
@@ -24,38 +24,34 @@
 
 | Trait | Hereditary Type | Single Parent Chance | Both Parents Chance | Baseline Birth Roll | Notes |
 | --- | --- | --- | --- | --- | --- |
-| `lifestyle_blood_mage` | Explicit Hereditary (`inheritable = yes`, non-genetic) | 25% | 100% | 0.20% | Audited by prevalence engine on birth. |
-| `lifestyle_blood_knight` | Non-Hereditary (`inheritable = no`, `genetic = no`) | 0% | 0% | 0% | Acquired via martial empowerment or initiation duel. |
-| `lifestyle_blood_empowerment` | Non-Hereditary (`inheritable = no`, `genetic = no`) | 0% | 0% | 0% | Personal occult mastery. Cannot be inherited. |
+| `lifestyle_blood_mage` | Scripted Birth On-Action (`on_birth_child`, non-genetic) | Scaled by game rule (35%–60%) | 100% | Scaled by game rule (1%–10%) | Evaluated on birth by prevalence engine & game rules. |
+| `lifestyle_blood_knight` | Scripted Birth On-Action (`on_birth_child`, non-genetic) | Scaled by game rule (35%–60%) | 100% | Scaled by game rule (1%–10%) | Evaluated on birth by prevalence engine & game rules. |
+| `lifestyle_blood_power` | Non-Hereditary (`inheritable = no`, `genetic = no`) | 0% | 0% | 0% | Personal occult mastery. Granted automatically at 0 XP alongside Mage/Knight traits. |
 
-- **Lineage Enhancement & Trait Theft:** Blood Empowerment `dynasty` track and house modifier `dynasty_blood_legacy_modifier` boost positive congenital transmission. Trait drain interaction (`trait_drain_prisoner_event_interaction`) siphons congenital traits into personal lineage without natural mating.
+- **Lineage Enhancement & Trait Theft:** Blood Power `dynasty` track and house modifier `dynasty_blood_legacy_modifier` boost positive congenital transmission. Trait drain interaction (`trait_drain_prisoner_event_interaction`) siphons congenital traits into personal lineage without natural mating.
 
 
 ## Lifecycle Pipeline
 
 ```
-Acquisition (Decision / Event / Birth / Elevation)
+Acquisition (Decision / Event / Birth)
   │
   ├─► Standard Blood Mage Entry: bm_become_blood_mage_effect
-  │     ├─► add_trait = lifestyle_blood_mage
+  │     ├─► add_trait = lifestyle_blood_mage (blocked if already blood knight)
+  │     ├─► add_trait = lifestyle_blood_power (base 0 XP for adjacent UI grouping)
   │     ├─► bm_ensure_blood_mage_story_effect (creates situation story panel)
   │     ├─► add_character_flag = bm_blood_mage_prevalence_reviewed
-  │     └─► bm_apply_blood_mage_prevalence_retention_effect (strips if AI under restricted rules)
+  │     └─► bm_apply_blood_mage_prevalence_retention_effect (strips mage + power if AI under restricted rules)
   │
-  ├─► Standard Blood Knight Entry: bm_become_blood_knight_effect
-  │     ├─► add_trait = lifestyle_blood_knight (blocked if already blood mage)
-  │     ├─► bm_ensure_blood_mage_story_effect (creates situation story panel)
-  │     ├─► add_character_flag = bm_blood_knight_prevalence_reviewed
-  │     └─► bm_apply_blood_knight_prevalence_retention_effect (strips if AI under restricted rules)
-  │
-  └─► Elevation Entry: bm_elevate_blood_knight_to_blood_mage_effect
-        ├─► Removes lifestyle_blood_knight, adds lifestyle_blood_mage
-        ├─► Converts 50% martial XP (slaughter->hematurgy, vanguard->bloodline)
-        ├─► Carries over ancient, benediction, and enlightenment XP 1:1
-        └─► Ensures story panel and prevalence review flag
+  └─► Standard Blood Knight Entry: bm_become_blood_knight_effect
+        ├─► add_trait = lifestyle_blood_knight (blocked if already blood mage)
+        ├─► add_trait = lifestyle_blood_power (base 0 XP for adjacent UI grouping)
+        ├─► bm_ensure_blood_mage_story_effect (creates situation story panel)
+        ├─► add_character_flag = bm_blood_knight_prevalence_reviewed
+        └─► bm_apply_blood_knight_prevalence_retention_effect (strips knight + power if AI under restricted rules)
 ```
 
-- **Childbirth Milestone:** When a child is born (`on_birth_child` -> `bm_on_birth_bloodline_xp`), any blood mage parent receives +2 `bloodline` XP (+4 `bloodline` XP if the newborn inherits the trait).
+- **Childbirth Milestone:** When a child is born (`on_birth_child` -> `bm_on_birth_bloodline_xp`), any blood mage parent receives **+1 Major Lifeforce** (`lifeforce_modifier_major`) and +2 `bloodline` XP (+4 `bloodline` XP if the newborn inherits the trait; doubled by Superior Feingur). Blood knight parents receive martial `vanguard` XP without Lifeforce gain.
 
 ## Where the details live
 

@@ -1,4 +1,17 @@
 ﻿education_duel_effect = {
+    add_piety = {
+        value = scaled_education_enhancement_cost
+        multiply = -1
+    }
+    add_character_flag = {
+        flag = bm_improve_education_cooldown
+        years = 2
+    }
+    blood_magic_used_major = yes
+    add_shared_bm_bk_xp = {
+        TRACK = enlightenment
+        XP = 2
+    }
     duel = {
         skill = $trait$
         value = 0
@@ -13,7 +26,6 @@
                 title = bm_education_enhancement.success
                 left_icon = root
                 level_up_trait_effect = {trait = education_$trait$}
-                add_piety_level = -1
             }
         }
         # Failure
@@ -40,7 +52,6 @@
             send_interface_toast = {
                 title = bm_education_enhancement.failure
                 left_icon = root
-                add_piety_level = -1
                 temporary_negative_lifeforce_effect_major = yes
             }
         }
@@ -48,6 +59,20 @@
 }
 
 education_master_duel_effect = {
+    add_piety = {
+        value = scaled_education_enhancement_cost
+        multiply = -1
+    }
+    add_character_flag = {
+        flag = bm_improve_education_cooldown
+        years = 2
+    }
+    blood_magic_used_superior = yes
+    bm_recount_lifeforce_stacks_effect = yes
+    add_shared_bm_bk_xp = {
+        TRACK = enlightenment
+        XP = 3
+    }
     duel = {
         skill = $trait$
         value = 0
@@ -63,9 +88,9 @@ education_master_duel_effect = {
                 left_icon = root
                 level_up_trait_effect = { trait = education_$trait$ }
                 add_piety_level = -1
-                add_xp_bm_dynamic = {
+                add_shared_bm_bk_xp = {
                     TRACK = enlightenment
-                    XP = 10
+                    XP = 2
                 }
             }
         }
@@ -94,4 +119,13 @@ education_master_duel_effect = {
             }
         }
     }
+}
+
+bm_education_new_cost_effect = {
+    add_piety = -1000
+    add_character_flag = {
+        flag = bm_new_education_cooldown
+        years = 2
+    }
+    blood_magic_used_superior = yes
 }

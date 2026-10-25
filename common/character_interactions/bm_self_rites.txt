@@ -1,0 +1,192 @@
+﻿bm_bleed_own_vein_interaction = {
+	category = interaction_category_bm_blood_magic
+	icon = bm_bleed_own_vein_interaction
+	auto_accept = yes
+	common_interaction = yes
+	desc = bm_bleed_own_vein_interaction_desc
+	interface_priority = 185
+
+	cooldown = {
+		years = 1
+	}
+
+	is_shown = {
+		scope:actor = scope:recipient
+		scope:actor = {
+			OR = {
+				has_trait = lifestyle_blood_mage
+				has_trait = lifestyle_blood_knight
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		custom_description = {
+			text = bm_bleed_own_vein_interaction_requirement_tt
+			scope:actor = {
+				NOT = { has_trait = wounded_3 }
+				NOT = { has_trait = maimed }
+			}
+		}
+	}
+
+	send_options_exclusive = yes
+
+	send_option = {
+		flag = minor_bleed
+		localization = bm_bleed_own_vein_interaction.minor_bleed
+		current_description = bm_bleed_own_vein_interaction.minor_bleed_desc
+		is_shown = {
+			always = yes
+		}
+		is_valid = {
+			scope:actor = {
+				NOT = { has_trait = wounded_2 }
+				NOT = { has_trait = wounded_3 }
+				NOT = { has_trait = maimed }
+			}
+		}
+		starts_enabled = {
+			scope:actor = {
+				NOT = { has_trait = wounded_2 }
+				NOT = { has_trait = wounded_3 }
+				NOT = { has_trait = maimed }
+			}
+		}
+	}
+
+	send_option = {
+		flag = major_bleed
+		localization = bm_bleed_own_vein_interaction.major_bleed
+		current_description = bm_bleed_own_vein_interaction.major_bleed_desc
+		is_shown = {
+			always = yes
+		}
+		is_valid = {
+			scope:actor = {
+				NOT = { has_trait = wounded_3 }
+				NOT = { has_trait = maimed }
+				NOT = { has_character_modifier = lifedrained_modifier }
+			}
+		}
+		starts_enabled = {
+			scope:actor = {
+				has_trait = wounded_2
+				NOT = { has_trait = wounded_3 }
+				NOT = { has_trait = maimed }
+				NOT = { has_character_modifier = lifedrained_modifier }
+			}
+		}
+	}
+
+	on_accept = {
+		debug_log = "BloodMageSelfCast: bleed_own_vein | Actor: [actor.GetShortUINameNoTooltip] (ID:[actor.GetID], [Select_CString(actor.IsPlayer, 'Player', 'AI')])"
+
+		if = {
+			limit = { scope:minor_bleed = yes }
+			scope:actor = {
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = bm_bleed_own_vein_interaction.minor_bleed.toast
+					left_icon = scope:actor
+
+					if = {
+						limit = { has_trait = wounded_1 }
+						remove_trait = wounded_1
+						add_trait = wounded_2
+					}
+					else = {
+						add_trait = wounded_1
+					}
+					add_character_modifier = {
+						modifier = lifeforce_modifier_minor
+					}
+					if = {
+						limit = { has_trait = lifestyle_blood_mage }
+						add_trait_xp = {
+							trait = lifestyle_blood_mage
+							track = hematurgy
+							value = 2
+						}
+					}
+					if = {
+						limit = {
+							has_trait = lifestyle_blood_knight
+							NOT = { has_trait = lifestyle_blood_mage }
+						}
+						add_blood_knight_xp = {
+							TRACK = slaughter
+							XP = 2
+						}
+					}
+					hidden_effect = {
+						bm_recount_lifeforce_stacks_effect = yes
+					}
+				}
+			}
+		}
+
+		if = {
+			limit = { scope:major_bleed = yes }
+			scope:actor = {
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = bm_bleed_own_vein_interaction.major_bleed.toast
+					left_icon = scope:actor
+
+					if = {
+						limit = { has_trait = wounded_1 }
+						remove_trait = wounded_1
+					}
+					add_trait = wounded_2
+					add_character_modifier = {
+						modifier = lifedrained_modifier
+					}
+					add_stress = 25
+					add_character_modifier = {
+						modifier = lifeforce_modifier_major
+					}
+					if = {
+						limit = { has_trait = lifestyle_blood_mage }
+						add_trait_xp = {
+							trait = lifestyle_blood_mage
+							track = hematurgy
+							value = 4
+						}
+					}
+					if = {
+						limit = {
+							has_trait = lifestyle_blood_knight
+							NOT = { has_trait = lifestyle_blood_mage }
+						}
+						add_blood_knight_xp = {
+							TRACK = slaughter
+							XP = 4
+						}
+					}
+					hidden_effect = {
+						bm_recount_lifeforce_stacks_effect = yes
+					}
+				}
+			}
+		}
+	}
+
+	ai_targets = {
+		ai_recipients = self
+	}
+	ai_potential = { always = yes }
+	ai_frequency = 24
+	ai_will_do = {
+		base = 0
+		modifier = {
+			scope:actor = {
+				NOT = { has_character_modifier = lifeforce_modifier_minor }
+				NOT = { has_character_modifier = lifeforce_modifier_major }
+				NOT = { has_character_modifier = lifeforce_modifier_superior }
+			health >= 4
+			}
+			add = 10
+		}
+	}
+}

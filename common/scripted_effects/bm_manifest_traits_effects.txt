@@ -47,9 +47,18 @@ bm_manifest_intellect_duel_effect = {
 				title = bm_manifest_traits.intellect_success_title
 				left_icon = root
 				bm_manifest_upgrade_trait_step_effect = { BRANCH = intellect }
-				add_xp_bm_dynamic = {
-					TRACK = bloodline
-					XP = 4
+				if = {
+					limit = { has_trait = lifestyle_blood_knight }
+					add_blood_knight_xp = {
+						TRACK = enlightenment
+						XP = 1
+					}
+				}
+				else = {
+					add_xp_bm_dynamic = {
+						TRACK = bloodline
+						XP = 1
+					}
 				}
 			}
 		}
@@ -104,9 +113,18 @@ bm_manifest_physique_duel_effect = {
 				title = bm_manifest_traits.physique_success_title
 				left_icon = root
 				bm_manifest_upgrade_trait_step_effect = { BRANCH = physique }
-				add_xp_bm_dynamic = {
-					TRACK = bloodline
-					XP = 4
+				if = {
+					limit = { has_trait = lifestyle_blood_knight }
+					add_blood_knight_xp = {
+						TRACK = vanguard
+						XP = 1
+					}
+				}
+				else = {
+					add_xp_bm_dynamic = {
+						TRACK = bloodline
+						XP = 1
+					}
 				}
 			}
 		}
@@ -161,9 +179,18 @@ bm_manifest_beauty_duel_effect = {
 				title = bm_manifest_traits.beauty_success_title
 				left_icon = root
 				bm_manifest_upgrade_trait_step_effect = { BRANCH = beauty }
-				add_xp_bm_dynamic = {
-					TRACK = bloodline
-					XP = 4
+				if = {
+					limit = { has_trait = lifestyle_blood_knight }
+					add_blood_knight_xp = {
+						TRACK = ancient
+						XP = 1
+					}
+				}
+				else = {
+					add_xp_bm_dynamic = {
+						TRACK = bloodline
+						XP = 1
+					}
 				}
 			}
 		}
@@ -218,13 +245,18 @@ bm_manifest_superior_intellect_duel_effect = {
 				title = bm_manifest_traits.intellect_superior_success_title
 				left_icon = root
 				bm_manifest_upgrade_trait_step_effect = { BRANCH = intellect }
-				add_xp_bm_dynamic = {
-					TRACK = bloodline
-					XP = 6
+				if = {
+					limit = { has_trait = lifestyle_blood_knight }
+					add_blood_knight_xp = {
+						TRACK = enlightenment
+						XP = 2
+					}
 				}
-				add_xp_bm_dynamic = {
-					TRACK = enlightenment
-					XP = 2
+				else = {
+					add_xp_bm_dynamic = {
+						TRACK = bloodline
+						XP = 2
+					}
 				}
 			}
 		}
@@ -279,13 +311,18 @@ bm_manifest_superior_physique_duel_effect = {
 				title = bm_manifest_traits.physique_superior_success_title
 				left_icon = root
 				bm_manifest_upgrade_trait_step_effect = { BRANCH = physique }
-				add_xp_bm_dynamic = {
-					TRACK = bloodline
-					XP = 6
+				if = {
+					limit = { has_trait = lifestyle_blood_knight }
+					add_blood_knight_xp = {
+						TRACK = vanguard
+						XP = 2
+					}
 				}
-				add_xp_bm_dynamic = {
-					TRACK = enlightenment
-					XP = 2
+				else = {
+					add_xp_bm_dynamic = {
+						TRACK = bloodline
+						XP = 2
+					}
 				}
 			}
 		}
@@ -340,13 +377,18 @@ bm_manifest_superior_beauty_duel_effect = {
 				title = bm_manifest_traits.beauty_superior_success_title
 				left_icon = root
 				bm_manifest_upgrade_trait_step_effect = { BRANCH = beauty }
-				add_xp_bm_dynamic = {
-					TRACK = bloodline
-					XP = 6
+				if = {
+					limit = { has_trait = lifestyle_blood_knight }
+					add_blood_knight_xp = {
+						TRACK = ancient
+						XP = 2
+					}
 				}
-				add_xp_bm_dynamic = {
-					TRACK = enlightenment
-					XP = 2
+				else = {
+					add_xp_bm_dynamic = {
+						TRACK = bloodline
+						XP = 2
+					}
 				}
 			}
 		}

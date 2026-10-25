@@ -3,30 +3,31 @@
 
 | Scope | Tokens |
 | --- | ---: |
-| **Total** | **8,423** |
-| Core | 1,809 |
-| Rules | 3,831 |
-| Skills | 2,783 |
+| **Total** | **10,220** |
+| Core | 1,305 |
+| Rules | 5,348 |
+| Skills | 3,567 |
 
 ## Details per file
 
 | File | Category | Tokens |
 | --- | --- | ---: |
-| `AGENTS.md` | Core | 1,809 |
-| `.agents/skills/caveman/SKILL.md` | Skills | 1,158 |
-| `.agents/rules/single-combat.md` | Rules | 813 |
+| `AGENTS.md` | Core | 1,305 |
+| `.agents/rules/single-combat.md` | Rules | 1,257 |
+| `.agents/skills/add-decision-option-widget/SKILL.md` | Skills | 753 |
+| `.agents/rules/ck3-scripting.md` | Rules | 752 |
+| `.agents/rules/ck3-error-catalog.md` | Rules | 728 |
 | `.agents/rules/ck3-religions.md` | Rules | 705 |
-| `.agents/rules/ck3-ai.md` | Rules | 672 |
-| `.agents/rules/ck3-scripting.md` | Rules | 412 |
-| `.agents/skills/add-blood-magic-decision/SKILL.md` | Skills | 346 |
-| `.agents/rules/ck3-decisions.md` | Rules | 341 |
-| `.agents/skills/document-subsystem/SKILL.md` | Skills | 283 |
-| `.agents/rules/ck3-traits.md` | Rules | 281 |
-| `.agents/skills/add-faith/SKILL.md` | Skills | 240 |
-| `.agents/skills/add-trait-track/SKILL.md` | Skills | 232 |
-| `.agents/rules/ck3-localization.md` | Rules | 226 |
-| `.agents/rules/pr-context.md` | Rules | 215 |
-| `.agents/skills/update-docs/SKILL.md` | Skills | 197 |
-| `.agents/skills/add-game-rule/SKILL.md` | Skills | 180 |
-| `.agents/rules/ck3-events.md` | Rules | 166 |
-| `.agents/skills/validate-change/SKILL.md` | Skills | 147 |
+| `.agents/rules/ck3-decisions.md` | Rules | 652 |
+| `.agents/rules/ck3-localization.md` | Rules | 643 |
+| `.agents/skills/manage-pr/SKILL.md` | Skills | 542 |
+| `.agents/skills/add-blood-magic-decision/SKILL.md` | Skills | 483 |
+| `.agents/skills/add-icon-asset/SKILL.md` | Skills | 404 |
+| `.agents/rules/ck3-events.md` | Rules | 332 |
+| `.agents/skills/document-subsystem/SKILL.md` | Skills | 289 |
+| `.agents/rules/ck3-traits.md` | Rules | 279 |
+| `.agents/skills/add-trait-track/SKILL.md` | Skills | 270 |
+| `.agents/skills/add-faith/SKILL.md` | Skills | 242 |
+| `.agents/skills/caveman/SKILL.md` | Skills | 203 |
+| `.agents/skills/update-release-notes/SKILL.md` | Skills | 197 |
+| `.agents/skills/add-game-rule/SKILL.md` | Skills | 184 |

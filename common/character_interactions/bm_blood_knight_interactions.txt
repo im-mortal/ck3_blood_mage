@@ -1,5 +1,5 @@
 ﻿make_blood_knight_interaction = {
-    category = interaction_category_friendly
+    category = interaction_category_bm_blood_magic
     auto_accept = yes
     common_interaction = yes
     desc = make_blood_knight_interaction_desc
@@ -8,58 +8,39 @@
     cost = {
         piety = {
             if = {
-                limit = { scope:mage_initiation = yes }
-                value = blood_knight_creation_piety_cost
+                limit = { scope:knight_major_initiation = yes }
+                value = bm_initiation_major_piety_cost
             }
-        }
-        prestige = {
             if = {
                 limit = { scope:knight_minor_initiation = yes }
-                value = blood_knight_creation_prestige_cost
+                value = bm_initiation_minor_piety_cost
             }
         }
     }
 
     is_shown = {
         scope:actor = {
-            OR = {
-                has_trait = lifestyle_blood_mage
-                has_trait = lifestyle_blood_knight
-            }
+            has_trait = lifestyle_blood_knight
         }
         scope:recipient = {
-            is_courtier_of = scope:actor
             NOT = { this = scope:actor }
             NOT = { has_trait = lifestyle_blood_mage }
             NOT = { has_trait = lifestyle_blood_knight }
+            bm_is_valid_positive_magic_target_trigger = { ACTOR = scope:actor }
         }
     }
     is_valid_showing_failures_only = {
         custom_description = {
-            text = recipient_must_be_knight_tt
-            scope:recipient = { is_knight_of = scope:actor }
-        }
-        trigger_if = {
-            limit = {
-                scope:actor = {
-                    has_trait = lifestyle_blood_mage
-                    NOT = { has_trait = lifestyle_blood_knight }
-                }
-            }
+            text = make_blood_knight_interaction_knight_requirement
             scope:actor = {
-                has_character_modifier = lifeforce_modifier_major
-            }
-        }
-        trigger_else = {
-            custom_description = {
-                text = make_blood_knight_interaction_knight_requirement
-                scope:actor = {
-                    OR = {
-                        AND = {
-                            has_character_modifier = lifeforce_modifier_minor
-                            prestige >= blood_knight_creation_prestige_cost
-                        }
+                OR = {
+                    AND = {
+                        has_character_modifier = lifeforce_modifier_minor
+                        piety >= bm_initiation_minor_piety_cost
+                    }
+                    AND = {
                         has_character_modifier = lifeforce_modifier_major
+                        piety >= bm_initiation_major_piety_cost
                     }
                 }
             }
@@ -69,49 +50,26 @@
     send_options_exclusive = yes
 
     send_option = {
-        flag = mage_initiation
-        localization = make_blood_knight_interaction.mage
-        current_description = make_blood_knight_interaction.mage_desc
-        is_shown = {
-            scope:actor = { has_trait = lifestyle_blood_mage }
-        }
-        is_valid = {
-            scope:actor = {
-                has_character_modifier = lifeforce_modifier_major
-            }
-        }
-        starts_enabled = {
-            scope:actor = {
-                has_trait = lifestyle_blood_mage
-                OR = {
-                    NOT = { has_trait = lifestyle_blood_knight }
-                    AND = {
-                        NOT = { has_character_modifier = lifeforce_modifier_minor }
-                        NOT = { has_character_modifier = lifeforce_modifier_major }
-                    }
-                }
-            }
-        }
-    }
-
-    send_option = {
         flag = knight_minor_initiation
         localization = make_blood_knight_interaction.knight_minor
         current_description = make_blood_knight_interaction.knight_minor_desc
         is_shown = {
-            scope:actor = { has_trait = lifestyle_blood_knight }
+            always = yes
         }
         is_valid = {
             scope:actor = {
                 has_character_modifier = lifeforce_modifier_minor
-                prestige >= blood_knight_creation_prestige_cost
+                piety >= bm_initiation_minor_piety_cost
             }
         }
         starts_enabled = {
             scope:actor = {
-                has_trait = lifestyle_blood_knight
                 has_character_modifier = lifeforce_modifier_minor
-                prestige >= blood_knight_creation_prestige_cost
+                piety >= bm_initiation_minor_piety_cost
+                OR = {
+                    NOT = { has_character_modifier = lifeforce_modifier_major }
+                    piety < bm_initiation_major_piety_cost
+                }
             }
         }
     }
@@ -121,21 +79,18 @@
         localization = make_blood_knight_interaction.knight_major
         current_description = make_blood_knight_interaction.knight_major_desc
         is_shown = {
-            scope:actor = { has_trait = lifestyle_blood_knight }
+            always = yes
         }
         is_valid = {
             scope:actor = {
                 has_character_modifier = lifeforce_modifier_major
+                piety >= bm_initiation_major_piety_cost
             }
         }
         starts_enabled = {
             scope:actor = {
-                has_trait = lifestyle_blood_knight
                 has_character_modifier = lifeforce_modifier_major
-                OR = {
-                    NOT = { has_character_modifier = lifeforce_modifier_minor }
-                    prestige < blood_knight_creation_prestige_cost
-                }
+                piety >= bm_initiation_major_piety_cost
             }
         }
     }
@@ -145,58 +100,134 @@
         if = {
             limit = { scope:knight_minor_initiation = yes }
             scope:actor = {
-                remove_character_modifier = lifeforce_modifier_minor
-                add_blood_knight_xp = {
-                    TRACK = vanguard
-                    XP = 2
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = make_blood_knight_interaction
+                    left_icon = scope:actor
+                    right_icon = scope:recipient
+                    remove_character_modifier = lifeforce_modifier_minor
+                    add_blood_knight_xp = {
+                        TRACK = vanguard
+                        XP = 1
+                    }
+                    scope:recipient = {
+                        bm_become_blood_knight_effect = yes
+                        add_opinion = {
+                            target = scope:actor
+                            modifier = magic_opinion_positive
+                            opinion = 20
+                        }
+                    }
+                    hidden_effect = {
+                        bm_recount_lifeforce_stacks_effect = yes
+                    }
                 }
             }
         }
         else_if = {
             limit = { scope:knight_major_initiation = yes }
             scope:actor = {
-                remove_character_modifier = lifeforce_modifier_major
-                add_blood_knight_xp = {
-                    TRACK = vanguard
-                    XP = 4
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = make_blood_knight_interaction
+                    left_icon = scope:actor
+                    right_icon = scope:recipient
+                    remove_character_modifier = lifeforce_modifier_major
+                    if = {
+                        limit = {
+                            scope:recipient = {
+                                OR = {
+                                    is_child_of = scope:actor
+                                    dynasty ?= scope:actor.dynasty
+                                }
+                            }
+                        }
+                        add_blood_knight_xp = {
+                            TRACK = vanguard
+                            XP = 2
+                        }
+                    }
+                    else = {
+                        add_blood_knight_xp = {
+                            TRACK = vanguard
+                            XP = 1
+                        }
+                    }
+                    scope:recipient = {
+                        bm_become_blood_knight_effect = yes
+                        add_opinion = {
+                            target = scope:actor
+                            modifier = magic_opinion_positive
+                            opinion = 20
+                        }
+                    }
+                    hidden_effect = {
+                        bm_recount_lifeforce_stacks_effect = yes
+                    }
                 }
-            }
-        }
-        else = {
-            scope:actor = { benediction_magic_cast_effect_major = yes }
-        }
-        scope:recipient = {
-            bm_become_blood_knight_effect = yes
-            add_opinion = {
-                target = scope:actor
-                modifier = magic_opinion_positive
-                opinion = 20
             }
         }
     }
     ai_potential = { always = yes }
     ai_targets = {
-        ai_recipients = dynasty
         ai_recipients = spouses
-        ai_recipients = family
         ai_recipients = children
-        ai_recipients = courtiers
         ai_recipients = councillors
+        ai_recipients = family
+        ai_recipients = dynasty
+        ai_recipients = courtiers
+        ai_recipients = vassals
     }
-    ai_frequency = 6
+    ai_frequency = 3
     ai_will_do = {
-        base = 33
+        base = 0
         ai_willingness_to_do_positive_magic = yes
-        bm_blood_knight_prevalence_ai_acquisition_modifier = yes
+
+        # Prioritisation hierarchy: spouse > consort > primary heir > children > knights > prowess > councillors > dynasty
+        modifier = {
+            scope:recipient = { is_spouse_of = scope:actor }
+            add = 1000
+        }
+        modifier = {
+            scope:recipient = { is_consort_of = scope:actor }
+            add = 500
+        }
+        modifier = {
+            scope:recipient = { is_primary_heir_of = scope:actor }
+            add = 800
+        }
+        modifier = {
+            scope:recipient = { is_child_of = scope:actor }
+            add = 100
+        }
+        modifier = {
+            scope:recipient = { is_knight_of = scope:actor }
+            add = 50
+        }
         modifier = {
             scope:recipient = { prowess >= 12 }
             add = 30
         }
+        modifier = {
+            scope:recipient = { is_councillor_of = scope:actor }
+            add = 25
+        }
+        modifier = {
+            scope:recipient = {
+                exists = dynasty
+                exists = scope:actor.dynasty
+                dynasty = scope:actor.dynasty
+            }
+            add = 25
+        }
+
+        bm_blood_knight_prevalence_ai_acquisition_modifier = yes
     }
 }
 
 empower_blood_knight_interaction = {
-    category = interaction_category_friendly
+    category = interaction_category_bm_blood_magic
+    icon = empower_blood_knight_interaction
     auto_accept = yes
     desc = empower_blood_knight_interaction_desc
     interface_priority = 189
@@ -204,9 +235,9 @@ empower_blood_knight_interaction = {
     is_shown = {
         scope:actor = { has_trait = lifestyle_blood_knight }
         scope:recipient = {
-            is_courtier_of = scope:actor
             NOT = { this = scope:actor }
             has_trait = lifestyle_blood_knight
+            bm_is_valid_positive_magic_target_trigger = { ACTOR = scope:actor }
         }
     }
     is_valid_showing_failures_only = {
@@ -220,6 +251,8 @@ empower_blood_knight_interaction = {
             }
         }
     }
+
+    send_options_exclusive = yes
 
     send_option = {
         flag = empower_major
@@ -252,42 +285,55 @@ empower_blood_knight_interaction = {
         }
     }
 
-    send_option = {
-        flag = empower_cancel
-        localization = empower_blood_knight_interaction.cancel
-    }
-
     on_accept = {
         debug_log = "BloodKnightInteraction: empower_blood_knight | Actor: [actor.GetShortUINameNoTooltip] -> Recipient: [recipient.GetShortUINameNoTooltip]"
         if = {
             limit = { scope:empower_major = yes }
             scope:actor = {
-                remove_character_modifier = lifeforce_modifier_major
-                add_blood_knight_xp = { TRACK = benediction XP = 4 }
-            }
-            scope:recipient = {
-                add_blood_knight_xp = { TRACK = vanguard XP = 10 }
-                add_blood_knight_xp = { TRACK = slaughter XP = 10 }
-                add_opinion = {
-                    target = scope:actor
-                    modifier = magic_opinion_positive
-                    opinion = 30
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = empower_blood_knight_interaction
+                    left_icon = scope:actor
+                    right_icon = scope:recipient
+                    blood_magic_used_major = yes
+                    add_blood_knight_xp = { TRACK = benediction XP = 2 }
+                    scope:recipient = {
+                        add_blood_knight_xp = { TRACK = vanguard XP = 3 }
+                        add_blood_knight_xp = { TRACK = slaughter XP = 3 }
+                        add_opinion = {
+                            target = scope:actor
+                            modifier = magic_opinion_positive
+                            opinion = 30
+                        }
+                    }
+                    hidden_effect = {
+                        bm_recount_lifeforce_stacks_effect = yes
+                    }
                 }
             }
         }
         else_if = {
             limit = { scope:empower_minor = yes }
             scope:actor = {
-                remove_character_modifier = lifeforce_modifier_minor
-                add_blood_knight_xp = { TRACK = benediction XP = 2 }
-            }
-            scope:recipient = {
-                add_blood_knight_xp = { TRACK = vanguard XP = 5 }
-                add_blood_knight_xp = { TRACK = slaughter XP = 5 }
-                add_opinion = {
-                    target = scope:actor
-                    modifier = magic_opinion_positive
-                    opinion = 15
+                send_interface_toast = {
+                    type = event_toast_effect_good
+                    title = empower_blood_knight_interaction
+                    left_icon = scope:actor
+                    right_icon = scope:recipient
+                    blood_magic_used_minor = yes
+                    add_blood_knight_xp = { TRACK = benediction XP = 1 }
+                    scope:recipient = {
+                        add_blood_knight_xp = { TRACK = vanguard XP = 1 }
+                        add_blood_knight_xp = { TRACK = slaughter XP = 1 }
+                        add_opinion = {
+                            target = scope:actor
+                            modifier = magic_opinion_positive
+                            opinion = 15
+                        }
+                    }
+                    hidden_effect = {
+                        bm_recount_lifeforce_stacks_effect = yes
+                    }
                 }
             }
         }

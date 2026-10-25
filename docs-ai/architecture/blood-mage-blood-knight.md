@@ -1,57 +1,75 @@
 # Blood Mage: Blood Knight
 
-Living technical specification for the Blood Knight subsystem.
+Living technical specification for the Blood Knight subsystem (`lifestyle_blood_knight`).
 
-## Executive Summary
+## Overview
 
-- **What:** Evolving martial combat lifestyle trait `lifestyle_blood_knight` functioning as a stepping stone toward Blood Mage. Features 5 tracks: 2 martial/prowess tracks specific to Blood Knight (`vanguard`, `slaughter`) and 3 tracks shared with Blood Mage (`ancient`, `benediction`, `enlightenment`), max 100 XP each.
-- **Icon:** `bm_blood_knight.dds` (`gfx/interface/icons/traits/bm_blood_knight.dds`).
-- **Base stats:** `prowess = 5`. Ruler designer cost: 50. Inheritable (25% single parent, 100% both; 0.20% birth) scaled by campaign game rule `bm_blood_knight_prevalence`. Mutually exclusive with `lifestyle_blood_mage` via entry effect, birth priority, and decision/interaction gates (permitting scripted dual-wielding on legendary figures like Egill).
-- **How to acquire:**
-  - `make_blood_knight_interaction`: Cast by a Blood Mage (100 Piety + Major Lifeforce) or fellow Blood Knight (200 Prestige + Minor Lifeforce, OR 0 Prestige + Major Lifeforce) on a sworn knight/courtier (cannot target self; a Blood Mage cannot become a Blood Knight).
-  - **Geyser Duel Initiation (`bm_geyser_duel.0001`):** Travel to Reykjavik or Tsushima and confront Egill Skallagrímsson via `bm_blood_cultist_become_blood_mage_decision` or `bm_enhance_blood_ritual_decision` (requires Piety or Prestige level >= 2 to open decision; unavailable to existing Blood Mages and Blood Knights). Choosing the Prowess duel requires Prestige level >= 2, costs 1 Fame level (`add_prestige_level = -1`), and bestows `lifestyle_blood_knight` upon victory.
-- **Elevation to Blood Mage:**
-  - Blood Knights can take the decision `bm_elevate_to_blood_mage_decision` (requires Piety level >= 3, Learning > 30, Minor or Major Lifeforce held, costs 500 Piety) to attempt a ritual elevation into a full Blood Mage. During the trial, the character undergoes a Learning or Prowess test. Upon success, `lifestyle_blood_knight` is removed, `lifestyle_blood_mage` is gained, all accumulated `ancient`, `benediction`, and `enlightenment` track XP carries over loss-free (1:1), and 50% of knight-exclusive XP converts thematically (`vanguard` -> `bloodline`, `slaughter` -> `hematurgy`).
-- **Universal rank progression:** Every trait rank across all tracks awards exact stat parity with Blood Mage: `health = 0.1`, `life_expectancy = 2`, `years_of_fertility = 1`, and `epidemic_resistance = 1`, alongside `monthly_prestige = 0.1` and track-specific martial modifiers.
-- **How to level & sustain lifeforce:**
-  - **Empower Blood Knight Interaction (`empower_blood_knight_interaction`):** Direct interaction popup from a fellow Blood Knight to a sworn knight comrade (Major Lifeforce: +10 XP to `vanguard` and `slaughter`, +4 Benediction XP to caster; Minor: +5 martial XP, +2 Benediction XP to caster).
-  - **Battle Victory / Defeat:** Gains `vanguard` (+4 commander / +3 knight; 33% chance Minor Lifeforce) and defeat survival (+1 `vanguard`, +1 `enlightenment`).
-  - **Duel Victory:** Victor gains +5 XP (`slaughter`) and awards 1 Minor Lifeforce (strictly exclusive to Blood Knights).
-  - **Tournament Participation/Victory:** Completing a tournament awards +3 XP (`slaughter`).
-  - **Seek Power in Nature's Domain (`seek_power_decision`):** Unified wilderness expedition harvesting Lifeforce and martial XP (2-year cooldown landed, 1-year unlanded/wanderer).
-  - **Manifest Lifeforce (`bm_manifest_lifeforce_decision`):** Blood Knights undergo a Learning duel to stoke their blood, granting +3 XP (`enlightenment`) and either Major Lifeforce (critical success) or Minor Lifeforce (success).
-  - **Ambient Lifeforce Roll (`blood_mage_yearly_events.004`):** Passive ~33% chance per year to condense Minor Lifeforce ambiently in addition to passive +1 XP in `enlightenment` and `ancient`. Strictly exclusive to Blood Knights (`lifestyle_blood_knight`); Blood Mages do not receive ambient Lifeforce.
-  - **Lifeforce Condensation:** Spend 1 Minor Lifeforce + 100 Piety via `bm_cast_blood_magic_minor` to forge 1 Major Lifeforce (+2 `ancient` XP).
-  - **Minor Lifedrain on Courtiers and Prisoners (`lifedrain_courtier_event_interaction`):** Blood Knights can siphon free courtiers or prisoners using a Prowess duel (costs 25 Piety), granting Minor Lifeforce and +1 `slaughter` XP.
-  - **Trait Drain on Prisoners (`trait_drain_prisoner_event_interaction`):** Blood Knights holding Major Lifeforce can steal congenital traits from prisoners up to rank 5 (`genius`, `herculean`, `beautiful`, plus `fecund`/`giant`/`pure_blooded`), granting +2 `slaughter` XP.
-  - **Bless Bloodline (`bm_bless_bloodline_interaction`):** Blood Knights can bless their kin's blood (costs 35 Piety + Minor Lifeforce), granting +2 `vanguard` XP to the caster.
-  - **Become Blood Cultist (`become_blood_cultist_decision`):** Blood Knights can convert realm faith to Blóðtrú, Ketsudō, or Xuédào (costs 250 Piety + Major Lifeforce; 10-year cooldown).
-  - **Education Elevation (`bm_cast_blood_magic_major_decision`):** Blood Knights can elevate any education trait they hold up to rank 4 via Major Blood Magic (costs Major Lifeforce + Piety), granting +5 `enlightenment` XP (level 5 remains exclusive to Blood Mages via Superior Magic).
-  - **Restorative Magic (`bm_heal_ailment`):** Blood Knights can heal minor and major ailments on self and others using Minor or Major Lifeforce (healing allies awards +1 Vanguard & +1 Benediction XP for minor, +2 Vanguard & +2 Benediction XP for major; self-healing awards +2 or +4 Enlightenment XP; deadly ailments remain exclusive to Blood Mages via Superior Magic).
-  - **Minor Blood Magic Channeling (`bm_cast_blood_magic_minor_decision`):** Blood Knights can channel minor lifeforce or purge bodily frailty (+1/+2 `enlightenment` XP).
+Permanent, Devotion-anchored martial endgame peer (`lifestyle_blood_knight`) to `lifestyle_blood_mage` (*Fire and Sword* vs *Shepherd of the Faithful*).
+- **Traits & Base:** `gfx/interface/icons/traits/bm_blood_knight.dds`. Base: `same_opinion = 10`, `ruler_designer_cost = 50`. Inheritable (`25%` single parent, `100%` both, `0.20%` spontaneous birth), scaled by `bm_blood_knight_prevalence` rule. Mutually exclusive with `lifestyle_blood_mage` (dual-wielding reserved for Egill Skallagrímsson).
+- **Acquisition:**
+  - `make_blood_knight_interaction`: Initiated by a fellow Blood Knight (`100` Piety + Major Lifeforce or `250` Piety + Minor Lifeforce) on spouse, child, kin, knight, or courtier. Awards `+4` Vanguard XP (`+5` for child or dynasty kin).
+  - **Geyser Duel Initiation (`bm_geyser_duel.0001`):** Travel to Reykjavik or Tsushima via `bm_blood_cultist_become_blood_mage_decision` or `bm_enhance_blood_ritual_decision` (`piety_level >= 2`). Prowess duel costs 1 Devotion level (`add_piety_level = -1`) and grants `lifestyle_blood_knight` on win.
+- **Apex Devotion & Milestones:** Shared 100 XP capstones (`ancient`, `enlightenment`, `benediction`) grant Devotion scaling (`+50%` Devotion Impact, `+2` Learning/Diplomacy per Devotion level). All 5 tracks grant `no_prowess_loss_from_age = yes` at 100 XP. Standard Vitality steps (`+0.1` Health, `+2.5` Life Exp, `+1.25` Fertility Yr, `+1` Epidemic Res) apply at tiers 10–40 and 60–90 (4× at 50 XP, 8× at 100 XP).
 
-### Tracks Master Table
+---
 
-Each track has 10 tiers (10, 20, 30, ..., 100 XP).
-- **`vanguard`**: Army command and operational mobility (+1 Advantage/tier, +1 Martial at even tiers, +2% Movement Speed/tier, +3% Pursuit/tier, +1 Knight Limit/tier, +1 Martial/prestige tier at 50 & 100 XP).
-- **`slaughter`**: Single combat and champion devastation (+2 Prowess/tier, +10% Knight Effectiveness/tier, +5% Dread Gain/tier, +1 Prowess/prestige tier at 50 & 100 XP).
-- **`enlightenment`**: Shared with Blood Mage: Piety, learning, and self-mastery (+0.2 Monthly Piety/tier, +5% Piety Gain/tier, +1 Learning per Piety level at 50 & 100 XP, age prowess lock at 100 XP).
-- **`ancient`**: Shared with Blood Mage: Dynasty prestige, lifestyle XP, longevity, and age resilience (+0.1 Monthly Dynasty Prestige/tier, +5% Lifestyle XP/tier, +0.25/+0.5 Negate Health Penalty at 50/100 XP, age prowess lock at 100 XP).
-- **`benediction`**: Shared with Blood Mage: Healing, opinion, and prestige.
+## Harvesting & Advancement
 
-## Key Mechanics
+- **Battlefield Victory (`bm_on_combat_end_winner`):** As commander or knight: `+1` to `+5` `vanguard` XP; rolls troop-scaled Lifeforce (`10%–100%` Minor, `0%–100%` Major across `<100` to `10,000+` troops).
+- **Battlefield Defeat (`bm_on_combat_end_loser`):** As commander or knight: `+1` to `+3` `vanguard` XP, `0` to `+2` `enlightenment` XP.
+- **Fatal Single Combat (`bm_on_character_death_duel`):** Slaying a foe grants `+5` `slaughter` XP and 1 Major Lifeforce. If foe has `prowess >= 20` or holds Mage/Knight trait: 25% chance of 1 Superior Lifeforce.
+- **Tournament Completion (`bm_on_travel_activity_complete_tournament`):** `+3` `slaughter` XP.
+- **Yearly Ambient Pulse (`blood_mage_yearly_events.004`):** Passive ~33% chance/year for 1 Minor Lifeforce + `+1` `ancient` XP. Exclusive to Blood Knights.
+- **Empower Blood Knight (`empower_blood_knight_interaction`):** Cast on spouse, child, kin, knight, courtier:
+  - Major LF: `+10` `vanguard` and `slaughter` XP to target; `+4` `benediction` to caster.
+  - Minor LF: `+5` `vanguard` and `slaughter` XP to target; `+2` `benediction` to caster.
+- **Court & Dungeon Interactions:**
+  - `lifedrain_courtier_event_interaction`: Prowess duel siphon (`25` Piety, 3-mo CD) -> 1 Minor Lifeforce + `+1` `slaughter` XP.
+  - `trait_drain_prisoner_event_interaction`: Steal congenital traits up to Rank 5 (`100–325` Piety + Major Lifeforce) -> `+2` `slaughter` XP.
+  - `bm_bless_bloodline_interaction`: Bless child, kin, knight, courtier (`35` Piety + Minor LF for 10-yr buff; `50` Piety for permanent Feingur) -> `+1` `benediction` XP. **Blood of Iron** (`bm_blessed_blood_iron_modifier`: `+2` Martial, `+4` Prowess, `+25%` Knight Effectiveness, `+1.0` Health, `+0.50` Negate Health Penalty for 10 yrs) serves as the unified champion blessing.
+  - `bm_ritual_spar_decision`: Annual courtyard practice duel (SCE, non-lethal, 1 Minor LF, 1-yr CD). Samples up to 3 candidates weighted by prowess ($w_i = 	ext{prowess}_i$). Victor: 1 Major LF + `+3` Vanguard/Hematurgy XP; Loser: `+1` Vanguard/Enlightenment XP; Both: `+20` Blademaster XP, `+15` opinion.
+  - `bm_cull_champion_interaction`: Blood sacrifice of prowess >= 12 prisoner / Blood Knight prisoner or broken follower (`50` Piety) -> Executes target (`death_lifedrain_reason`), yields 1 Major LF, `+3` `slaughter` (Knight) / `+3` `hematurgy` (Mage) XP, and rolls `1 × prowess` chance (max 50%) for 1 Superior Lifeforce.
+  - `bm_inscribe_rune_other_interaction`: Carve Minor (`+4` `benediction` XP) or Major (`+5` `benediction` XP) runes onto courtiers, kin, knights, or golems.
+  - `bm_heal_ailment`: Heals 32 conditions, 5 old-age traits, and 11 coping vices.
+- **Grimoires & Spells:** Full access to Minor (`bm_cast_blood_magic_minor`), Major (`bm_cast_blood_magic_major`), and Superior (`bm_cast_blood_magic_superior`) Blood Magic, including Education (1★–5★), Congenital manifestation (Ranks 1–5), Blood Golems, and Runes. See [`blood-mage-magic-tiers.md`](blood-mage-magic-tiers.md).
 
-- **Mutual Exclusivity & Hierarchy:**
-  - `lifestyle_blood_mage` and `lifestyle_blood_knight` are mutually exclusive opposites.
-  - Blood Mages can grant Blood Knight to others, but cannot become Blood Knights themselves.
-  - Blood Knights can elevate themselves to Blood Mage via `bm_elevate_to_blood_mage_decision`.
-- **Major Blood Magic & Secondary Empowerment:**
-  - Blood Knights have full access to Major Blood Magic (`bm_cast_blood_magic_major_decision`) and the secondary trait `lifestyle_blood_empowerment` upon possessing Major Lifeforce. Superior Blood Magic remains strictly exclusive to Blood Mages.
-- **Restorative Blood Magic & Healing:**
-  - `bm_heal_ailment`: Can target self, courtiers, liege, close family, spouse, and knights. Blood Knights can use Minor Lifeforce to heal minor ailments, and Major Lifeforce to heal major ailments on both self and others (e.g. `weak`, `wounded_2`, `incapable`, `infirm`, `blind`, etc.; deadly ailments remain Blood Mage only). Awards +2 `enlightenment` XP (minor self-healing), +4 `enlightenment` XP (major self-healing), +1 `vanguard` and +1 `benediction` XP (minor ally healing), or +2 `vanguard` and +2 `benediction` XP (major ally healing).
-  - `bm_cast_blood_magic_minor_decision`: Allows self-channeling, self-purging of negative traits, and condensing Minor Lifeforce into Major Lifeforce.
-- **Situation Panel Access:**
-  - Blood Knight rulers have access to the Blood Magic Situation panel (`bm_blood_mage_story`), displaying their knight disciplines (`vanguard`, `slaughter`, `ancient`, `benediction`, `enlightenment`), Lifeforce reserves, active attunement, and the unified Blood Knights (Dynasty & Court) roster.
+### Blood Hunt Encounters (`seek_power_decision`)
+
+Cooldown: 1 yr landed, 3 yrs wanderer (halved by Superior **Vegvísir**). Available to Knights and Mages (not traveling, not in activity, not imprisoned, not incapable). 20%–50% prowess-scaled chance (`bm_seek_power_traveler_chance_value`) for Lonely Road (`.003`), falling back to a 6-way encounter roll:
+
+| Encounter | Duel / Check | Outcomes & Rewards |
+| --- | --- | --- |
+| Royal Stag (`seek_power.002`) | Auto | **1 Minor Lifeforce**, `+1` `slaughter` (Knight) / `+1` `hematurgy` (Mage) XP. |
+| Beast's Lair (`seek_power.008`) | Prowess+Martial vs 20 | **Success:** 1 Major LF, `+25` Prestige, `+2` `slaughter`/`hematurgy` XP.<br>**Mixed:** 1 Minor LF, Wounded, `+10` Stress, `+1` `vanguard`/`ancient` XP.<br>**Fail / Crit Fail:** `0` LF, `+5` to `+20` Stress, Wounded.<br>**Option B:** Safe harvest -> 1 Minor LF, `+1` `ancient` XP. |
+| Edge of Woods (`seek_power.009`) | Prowess+Intrigue+Martial vs 20 | **Success:** 1 Major LF, `+2` `slaughter`/`hematurgy` XP.<br>**Mixed:** 1 Minor LF, Wounded, `+10` Stress, `+5` Dread, `+1` `slaughter`/`hematurgy` XP.<br>**Fail / Crit Fail:** `0` LF, `+5` to `+20` Stress, Wounded, `-15` Prestige.<br>**Option B:** Blood tithe -> 1 Minor LF, `+1` `benediction` XP. |
+| Lonely Road (`seek_power.003`) | Spawns `traveller_character_template` (Prowess 8–18) + `bm_escort_knight_character_template` (Prowess 10–15) | **Bout (`.003.knight`):** Crit Win -> 1 Major LF, `+3` XP; Win -> 1 Minor LF, `+2` XP; Spar -> `+1` `vanguard`/`hematurgy` XP.<br>**Lifedrain (`.003.a`):** Prowess+Learning vs 20 -> 1 Major LF, `+3` XP.<br>**SCE Duel (`.006`):** `prowess >= 25`, fatal SCE -> 1 Major LF, `+5` XP, 25% chance of 1 Superior LF (or spare/recruit).<br>**Recruit:** Persuade traveler (`+1` `enlightenment` XP) or recruit escort (`+2` `vanguard`/`ancient` XP). |
+| Outlaw Camp (`seek_power.010`) | Prowess+Martial vs 20 | **Success:** 1 Major LF, `+25` Gold, `+2` `slaughter`/`hematurgy` XP.<br>**Mixed:** 1 Minor LF, Wounded, `+10` Gold, `+10` Stress, `+1` `vanguard`/`hematurgy` XP.<br>**Fail / Crit Fail:** `0` LF, `-25` Gold, `+5` to `+20` Stress.<br>**Option B:** Tribute -> 1 Minor LF, `+15` Gold, `+5` Dread, `+1` `vanguard`/`bloodline` XP. |
+| Crimson Rite (`seek_power.011`) | Prowess+Learning vs 20 | **Success:** 1 Major LF, `+2` `slaughter`/`hematurgy` XP.<br>**Mixed:** 1 Minor LF, Wounded, `+15` Stress, `+1` `vanguard`/`hematurgy` XP.<br>**Fail / Crit Fail:** `0` LF, `-50` Piety, `+5` to `+20` Stress.<br>**Option B:** Chalice -> 1 Minor LF, `+50` Piety, `+2` `enlightenment` XP. |
+| Sacrificial Cairn (`seek_power.004`) | Auto | **1 Major Lifeforce**, `+2` `enlightenment` XP, `+1` `ancient` XP. |
+
+---
+
+## Blood Magic Men-at-Arms Regiments (`common/men_at_arms_types/bm_men_at_arms_types.txt`)
+
+Recruited by Blood Mages and Blood Knights. Visible when unavailable (`should_show_when_unavailable`), uncapped `max_regiments`, excluded from mercenaries (`allowed_in_hired_troops = no`).
+
+| Regiment | Key & Archetype | Stack | Stats (Dmg / Tough / Pur / Scr / Siege) | Counters | Terrain & Winter Modifiers | Costs & Requirements |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Blood Berserkers** | `bm_blood_berserkers`<br>`heavy_infantry`<br>Icon: `varangian_veterans` | `100` | `60` / `20` / `20` / `0` / `0.10` | • Pikemen (`1.5`)<br>• Skirmishers (`1.0`)<br>• Archers (`1.0`) | • **Taiga / Forest / Mountains:** `+12` Dmg, `+8` Pur<br>• **Mild & Harsh Winter:** `+10` Dmg, `+5` Tough<br>• **Desert / Floodplains:** `-8` Dmg, `-4` Tough | • **Unlock:** Devotion 2+ (`piety_level >= 2`)<br>• **Buy:** `250` Piety<br>• **Maint:** `1.50` / `0.50` Piety/mo (Raised / Unraised)<br>• **Provisions:** `7` (`@provisions_cost_infantry_moderate`) |
+| **Blood-Bound Behemoths** | `bm_blood_behemoths`<br>`elephant_cavalry`<br>Icon: `war_elephants` | `25`<br>*(Hired: 10)* | `210` / `80` / `0` / `0` / `0.25` | • Heavy Infantry (`2.0`)<br>• Pikemen (`2.0`) | • **Mountains / Desert Mountains / Hills / Drylands:** `+15` Tough<br>• **Winter / Desert:** No combat penalty (`0` drain)<br>• **Wetlands:** `-30` Dmg, `-15` Tough | • **Unlock:** Devotion 4+ (`piety_level >= 4`)<br>• **Buy:** `400` Piety<br>• **Maint:** `1.50` / `0.50` Piety/mo (Raised / Unraised)<br>• **Provisions:** `0` |
+
+---
+
+## Exclusive Tracks
+
+Complete track catalog and shared tracks live in [`blood-mage-track-xp-knight.md`](blood-mage-track-xp-knight.md) and [`blood-mage-track-xp.md`](blood-mage-track-xp.md).
+
+| Track | Focus | Step Bonus (Tiers 10–40, 60–90) | 50 XP Milestone | 100 XP Capstone |
+| --- | --- | --- | --- | --- |
+| **`vanguard`** | Army Command & Speed | `+1` Advantage (tiers 20–40, 60–90), `+1.75%` Army Speed (`+1` Martial at 20, 40, 60, 80) | 4× Vitality + `+3` Advantage, `+7%` Army Speed, `+2` Martial, `+1` Martial per Piety Level | 8× Vitality + `+7` Advantage, `+14%` Army Speed, `+4` Martial, `+1.5` Martial per Piety Level, `no_prowess_loss_from_age = yes` |
+| **`slaughter`** | Lethality & Knights | `+1.5` or `+2` Prowess, `+1` Knight Limit (tiers 20–40, 60–90), `+8.75%` Knight Effectiveness | 4× Vitality + `+7` Prowess, `+3` Knight Limit, `+35%` Knight Effectiveness, `+1` Prowess per Piety Level | 8× Vitality + `+14` Prowess, `+7` Knight Limit, `+70%` Knight Effectiveness, `+2` Prowess per Piety Level, `no_prowess_loss_from_age = yes` |
+
+---
 
 ## Where the details live
 
@@ -60,10 +78,11 @@ Each track has 10 tiers (10, 20, 30, ..., 100 XP).
 | Trait definition & tracks | `common/traits/bm_blood_knight_trait.txt` |
 | Lifecycle & prevalence effects | `common/scripted_effects/bm_blood_mage_lifecycle_effects.txt` |
 | Prevalence game rule | `common/game_rules/bm_game_rules.txt` (`bm_blood_knight_prevalence`) |
-| Elevation decision | `common/decisions/become_mage/bm_elevate_blood_knight_decision.txt` |
-| Elevation event & trial | `events/bm_blood_knight_elevation_events.txt` |
-| Trait XP transfer macro | `common/scripted_effects/bm_blood_mage_lifecycle_effects.txt` |
-| Bestow & empower interactions | `common/character_interactions/bm_blood_knight_interactions.txt` |
-| Minor healing & trait removal | `common/character_interactions/bm_cure_illness_interactions.txt` |
-| Minor blood magic decision & self-purge | `common/decisions/cast_magic/bm_cast_blood_magic_minor.txt`<br>`events/bm_cast_blood_magic_minor_events.txt` |
-| Yearly pulse | `events/bm_yearly_events.txt` |
+| Make & empower interactions | `common/character_interactions/bm_blood_knight_interactions.txt` |
+| Knight rites & sparring | `common/character_interactions/bm_knight_rites.txt` |
+| Healing & ailment removal | `common/character_interactions/bm_cure_illness_interactions.txt`, `events/bm_heal_ailment_events.txt` |
+| Superior magic decision & events | `common/decisions/cast_magic/bm_cast_blood_magic_superior.txt`, `events/bm_cast_blood_magic_superior_events.txt` |
+| Combat on-actions & effects | `common/on_action/bm_combat_on_actions.txt`, `common/scripted_effects/bm_combat_effects.txt` |
+| Duel fatality & Superior harvest | `common/on_action/bm_duel_on_actions.txt` |
+| Yearly pulse | `events/bm_yearly_events.txt` (`blood_mage_yearly_events.004`) |
+| Blood Magic Men-at-Arms | `common/men_at_arms_types/bm_men_at_arms_types.txt`, `localization/english/bm_men_at_arms_l_english.yml` |

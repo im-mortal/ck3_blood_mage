@@ -9,6 +9,7 @@ Enforces the format rules documented in AGENTS.md:
 - .txt, .gui, .yml: UTF-8 with BOM, trailing newline, balanced braces.
 - Preserves line endings and indentation.
 - Checks #tiger-ignore justification comments.
+- Requires docs-ai/branch-context/<branch>.md on non-main branches, updated when mod files change.
 - Supports --staged (for git pre-commit hooks) and --fix (auto-fix BOM/newlines).
 """
 
@@ -159,6 +160,24 @@ def check_yaml_indentation(text: str) -> list[tuple[int, str]]:
     return issues
 
 
+def check_yaml_syntax(text: str) -> list[str]:
+    """Check that YAML files have balanced double-quotes and no stray characters after quotes."""
+    issues = []
+    qc = text.count('"')
+    if qc % 2 != 0:
+        issues.append(f"Odd number of double-quote characters ({qc}) - likely unclosed string")
+    for line_num, line in enumerate(text.splitlines(), 1):
+        s = line.strip()
+        if not s or s.startswith("#") or s.startswith("l_english:"):
+            continue
+        m = re.match(r'^[a-zA-Z0-9_.:]+:\d*\s*".*"(\S+.*)$', s)
+        if m:
+            extra = m.group(1).strip()
+            if not extra.startswith("#"):
+                issues.append(f"Line {line_num}: Stray characters after closing quote: '{extra}'")
+    return issues
+
+
 def check_file(path: Path, auto_fix: bool = False) -> list[str]:
     """Validate a single file and optionally fix BOM and trailing newline."""
     errors = []
@@ -169,13 +188,16 @@ def check_file(path: Path, auto_fix: bool = False) -> list[str]:
         return [f"Could not read file: {e}"]
 
     has_bom = raw.startswith(b"\xef\xbb\xbf")
+    has_multiple_boms = raw.startswith(b"\xef\xbb\xbf\xef\xbb\xbf")
+    has_embedded_bom = b"\xef\xbb\xbf" in raw[3:]
     has_trailing_nl = raw.endswith(b"\n")
 
-    if auto_fix and (not has_bom or not has_trailing_nl):
+    if auto_fix and (not has_bom or has_multiple_boms or not has_trailing_nl):
         fixed_raw = raw
-        if not has_bom:
-            fixed_raw = b"\xef\xbb\xbf" + fixed_raw
-        if not has_trailing_nl:
+        while fixed_raw.startswith(b"\xef\xbb\xbf"):
+            fixed_raw = fixed_raw[3:]
+        fixed_raw = b"\xef\xbb\xbf" + fixed_raw
+        if not fixed_raw.endswith(b"\n"):
             fixed_raw = fixed_raw + b"\n"
         try:
             with open(path, "wb") as f:
@@ -183,12 +205,17 @@ def check_file(path: Path, auto_fix: bool = False) -> list[str]:
             print(f"Fixed formatting for: {path}")
             raw = fixed_raw
             has_bom = True
+            has_multiple_boms = False
             has_trailing_nl = True
         except OSError as e:
             errors.append(f"Failed to auto-fix {path}: {e}")
 
     if not has_bom:
         errors.append("Missing UTF-8 BOM (required for CK3 .txt, .gui, .yml)")
+    elif has_multiple_boms:
+        errors.append("Multiple UTF-8 BOM headers at start of file (causes corrupted tokens in CK3)")
+    if has_embedded_bom:
+        errors.append("Embedded UTF-8 BOM byte sequence found inside file body")
     if not has_trailing_nl:
         errors.append("Missing trailing newline at end of file")
 
@@ -213,15 +240,77 @@ def check_file(path: Path, auto_fix: bool = False) -> list[str]:
             f"Line {line_num}: #tiger-ignore requires a justification comment ('{line_text}')"
         )
 
-    # Check YAML indentation under language header
+    # Check YAML indentation and syntax
     if path.suffix.lower() == ".yml":
         yaml_issues = check_yaml_indentation(text)
         for line_num, line_text in yaml_issues:
             errors.append(
                 f"Line {line_num}: Localization key requires leading whitespace under language header ('{line_text}')"
             )
+        yaml_syntax_issues = check_yaml_syntax(text)
+        for issue in yaml_syntax_issues:
+            errors.append(issue)
 
     return errors
+
+
+BRANCH_CONTEXT_DIR = Path("docs-ai") / "branch-context"
+BASE_BRANCHES = ("main", "origin/main", "master", "origin/master")
+
+
+def _git(repo_root: Path, *args: str) -> "str | None":
+    """Run a git command and return stdout, or None on failure."""
+    try:
+        res = subprocess.run(
+            ["git", *args], cwd=repo_root, capture_output=True, text=True, check=True
+        )
+        return res.stdout
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return None
+
+
+def check_branch_context(repo_root: Path) -> list[str]:
+    """
+    Enforce the mandatory branch context file (AGENTS.md, .agents/skills/manage-pr):
+    - Every branch except main/master needs docs-ai/branch-context/<branch>.md.
+    - If the branch changes mod files versus main, that file must change too.
+    """
+    branch = (_git(repo_root, "branch", "--show-current") or "").strip()
+    if not branch or branch in {"main", "master"}:
+        return []
+
+    rel_ctx = (BRANCH_CONTEXT_DIR / f"{branch}.md").as_posix()
+    hint = "Template: .agents/skills/manage-pr/SKILL.md."
+    if not (repo_root / rel_ctx).is_file():
+        return [f"Missing mandatory branch context file '{rel_ctx}'. Create it. {hint}"]
+
+    ctx_text = (repo_root / rel_ctx).read_text(encoding="utf-8-sig", errors="replace")
+    missing = [h for h in ("## Motivation", "## Changes") if h not in ctx_text]
+    if missing:
+        return [f"'{rel_ctx}' lacks heading(s) {', '.join(missing)}. {hint}"]
+
+    base = None
+    for candidate in BASE_BRANCHES:
+        out = _git(repo_root, "merge-base", "HEAD", candidate)
+        if out and out.strip():
+            base = out.strip()
+            break
+    if base is None:
+        return []
+
+    changed = set((_git(repo_root, "diff", "--name-only", base) or "").splitlines())
+    changed |= set(
+        (_git(repo_root, "ls-files", "--others", "--exclude-standard") or "").splitlines()
+    )
+    touches_mod = any(
+        p.split("/", 1)[0] in GAME_DIRS for p in changed
+    )
+    if touches_mod and rel_ctx not in changed:
+        return [
+            f"Branch '{branch}' changes mod files but '{rel_ctx}' is unchanged versus main. "
+            f"Update it to the branch's current state. {hint}"
+        ]
+    return []
 
 
 def install_pre_commit_hook(repo_root: Path) -> bool:
@@ -343,6 +432,14 @@ def main():
             print(f"\033[1;31m[ERROR]\033[0m {rel_path}:")
             for err in errors:
                 print(f"  - {err}")
+
+    # Mandatory branch context (also in pre-commit, which passes filenames)
+    ctx_errors = check_branch_context(repo_root)
+    if ctx_errors:
+        total_errors += len(ctx_errors)
+        print("\033[1;31m[ERROR]\033[0m branch context:")
+        for err in ctx_errors:
+            print(f"  - {err}")
 
     if total_errors > 0:
         print(

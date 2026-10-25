@@ -7,15 +7,38 @@ bm_education_enhancement.001 = {
     desc = bm_education_enhancement.001.desc
     theme = witchcraft
 
+    left_portrait = {
+        character = root
+        animation = personality_rational
+    }
+
     # Diplomacy education enhancement
     option = {
         name = bm_education_enhancement.001.diplomacy
         trigger = {
-            AND = {
-                has_trait = education_diplomacy
-                NOT = { has_trait = education_diplomacy_4 }
-                NOT = { has_trait = education_diplomacy_5 }
+            has_trait = education_diplomacy
+            NOT = { has_trait = education_diplomacy_4 }
+            NOT = { has_trait = education_diplomacy_5 }
+            trigger_if = {
+                limit = { has_trait = education_diplomacy_1 }
+                piety_level >= 1
             }
+            trigger_else_if = {
+                limit = { has_trait = education_diplomacy_2 }
+                piety_level >= 2
+            }
+            trigger_else_if = {
+                limit = { has_trait = education_diplomacy_3 }
+                piety_level >= 3
+            }
+            trigger_else = {
+                always = no
+            }
+        }
+        show_as_unavailable = {
+            has_trait = education_diplomacy
+            NOT = { has_trait = education_diplomacy_4 }
+            NOT = { has_trait = education_diplomacy_5 }
         }
         education_duel_effect = {trait = diplomacy}
         ai_chance = { base = 100 }
@@ -25,11 +48,29 @@ bm_education_enhancement.001 = {
     option = {
         name = bm_education_enhancement.001.martial
         trigger = {
-            AND = {
-                has_trait = education_martial
-                NOT = { has_trait = education_martial_4 }
-                NOT = { has_trait = education_martial_5 }
+            has_trait = education_martial
+            NOT = { has_trait = education_martial_4 }
+            NOT = { has_trait = education_martial_5 }
+            trigger_if = {
+                limit = { has_trait = education_martial_1 }
+                piety_level >= 1
             }
+            trigger_else_if = {
+                limit = { has_trait = education_martial_2 }
+                piety_level >= 2
+            }
+            trigger_else_if = {
+                limit = { has_trait = education_martial_3 }
+                piety_level >= 3
+            }
+            trigger_else = {
+                always = no
+            }
+        }
+        show_as_unavailable = {
+            has_trait = education_martial
+            NOT = { has_trait = education_martial_4 }
+            NOT = { has_trait = education_martial_5 }
         }
         education_duel_effect = {trait = martial}
         ai_chance = { base = 100 }
@@ -39,11 +80,29 @@ bm_education_enhancement.001 = {
     option = {
         name = bm_education_enhancement.001.stewardship
         trigger = {
-            AND = {
-                has_trait = education_stewardship
-                NOT = { has_trait = education_stewardship_4 }
-                NOT = { has_trait = education_stewardship_5 }
+            has_trait = education_stewardship
+            NOT = { has_trait = education_stewardship_4 }
+            NOT = { has_trait = education_stewardship_5 }
+            trigger_if = {
+                limit = { has_trait = education_stewardship_1 }
+                piety_level >= 1
             }
+            trigger_else_if = {
+                limit = { has_trait = education_stewardship_2 }
+                piety_level >= 2
+            }
+            trigger_else_if = {
+                limit = { has_trait = education_stewardship_3 }
+                piety_level >= 3
+            }
+            trigger_else = {
+                always = no
+            }
+        }
+        show_as_unavailable = {
+            has_trait = education_stewardship
+            NOT = { has_trait = education_stewardship_4 }
+            NOT = { has_trait = education_stewardship_5 }
         }
         education_duel_effect = {trait = stewardship}
         ai_chance = { base = 100 }
@@ -53,11 +112,29 @@ bm_education_enhancement.001 = {
     option = {
         name = bm_education_enhancement.001.intrigue
         trigger = {
-            AND = {
-                has_trait = education_intrigue
-                NOT = { has_trait = education_intrigue_4 }
-                NOT = { has_trait = education_intrigue_5 }
+            has_trait = education_intrigue
+            NOT = { has_trait = education_intrigue_4 }
+            NOT = { has_trait = education_intrigue_5 }
+            trigger_if = {
+                limit = { has_trait = education_intrigue_1 }
+                piety_level >= 1
             }
+            trigger_else_if = {
+                limit = { has_trait = education_intrigue_2 }
+                piety_level >= 2
+            }
+            trigger_else_if = {
+                limit = { has_trait = education_intrigue_3 }
+                piety_level >= 3
+            }
+            trigger_else = {
+                always = no
+            }
+        }
+        show_as_unavailable = {
+            has_trait = education_intrigue
+            NOT = { has_trait = education_intrigue_4 }
+            NOT = { has_trait = education_intrigue_5 }
         }
         education_duel_effect = {trait = intrigue}
         ai_chance = { base = 100 }
@@ -67,19 +144,40 @@ bm_education_enhancement.001 = {
     option = {
         name = bm_education_enhancement.001.learning
         trigger = {
-            AND = {
-                has_trait = education_learning
-                NOT = { has_trait = education_learning_4 }
-                NOT = { has_trait = education_learning_5 }
+            has_trait = education_learning
+            NOT = { has_trait = education_learning_4 }
+            NOT = { has_trait = education_learning_5 }
+            trigger_if = {
+                limit = { has_trait = education_learning_1 }
+                piety_level >= 1
             }
+            trigger_else_if = {
+                limit = { has_trait = education_learning_2 }
+                piety_level >= 2
+            }
+            trigger_else_if = {
+                limit = { has_trait = education_learning_3 }
+                piety_level >= 3
+            }
+            trigger_else = {
+                always = no
+            }
+        }
+        show_as_unavailable = {
+            has_trait = education_learning
+            NOT = { has_trait = education_learning_4 }
+            NOT = { has_trait = education_learning_5 }
         }
         education_duel_effect = {trait = learning}
         ai_chance = { base = 100 }
     }
 
-    # Portraits
-    left_portrait = {
-        character = root
-        animation = personality_rational
+    # Back
+    option = {
+        name = bm_education_enhancement.001.back
+        trigger = {
+            is_ai = no
+        }
+        ai_chance = { base = 0 }
     }
 }

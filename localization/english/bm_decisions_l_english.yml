@@ -37,16 +37,21 @@
 
 
 
-  manifest_lifeforce_major_success_tt: "You Sucessfully manifested Lifeforce"
-  manifest_lifeforce_minor_success_tt: "You Sucessfully manifested Lifeforce"
-  manifest_lifeforce_major_failure_tt: "You failed to manifest Lifeforce"
+  manifest_lifeforce_superior_success_tt: "You successfully manifested Superior Lifeforce!"
+  manifest_lifeforce_double_major_success_tt: "You successfully manifested 2 Major Lifeforce!"
+  manifest_lifeforce_major_success_tt: "You successfully manifested Major Lifeforce"
+  manifest_lifeforce_minor_success_tt: "You successfully manifested Minor Lifeforce"
+  manifest_lifeforce_major_failure_tt: "You suffered severe recoil from manifesting Lifeforce"
+  manifest_lifeforce_minor_failure_penalty_tt: "You suffered minor recoil from manifesting Lifeforce"
   manifest_lifeforce_minor_failure_tt: "You failed to manifest Lifeforce"
+  manifest_lifeforce_nothing_extra_tt: "You manifested baseline Lifeforce, but drew no additional power from the trance"
 
   # Become blood mage / blood knight Decision
   bm_enhance_blood_ritual_decision: "Trial of Blood"
   bm_enhance_blood_ritual_decision_confirm: "Challenge the Ancient Master"
   bm_enhance_blood_ritual_decision_tooltip: "Travel to the sacred geysers of Reykjavik or Tsushima to challenge Egill to a duel of learning or prowess."
   bm_enhance_blood_ritual_location_requirement_tt: "You must be present in either Reykjavik (Vestisland) or Tsushima"
+  NOT_bm_enhance_blood_ritual_location_requirement_tt: "You must be present in either Reykjavik (Vestisland) or Tsushima"
   bm_enhance_blood_ritual_decision.success_tt: "$bm_geyser_duel.success_tt$"
   bm_enhance_blood_ritual_decision.blood_knight_success_tt: "$bm_geyser_duel.blood_knight_success_tt$"
   bm_enhance_blood_ritual_decision.mental_failure_tt: "$bm_geyser_duel.mental_failure_tt$"
@@ -55,10 +60,3 @@
   bm_enhance_blood_ritual_decision.failure_tt: "$bm_geyser_duel.failure_tt$"
 
   bm_enhance_blood_ritual_decision_desc: "My extensive research into the blood arts has brought me to this precipice. Ancient lore speaks of Egill Skallagrímsson—berserker, poet, and master of blood-runes guarding the geothermal geysers of Reykjavik and the sacred springs of Tsushima. By confronting this ancient master, you can test your Learning to awaken blood magic, or your Prowess to become a fearsome Blood Knight.\n\nVictory will awaken your blood; defeat guarantees a shattered mind or broken flesh."
-
-  # Elevate to Blood Mage
-  bm_elevate_to_blood_mage_decision: "Ascend to Blood Mage"
-  bm_elevate_to_blood_mage_decision_desc: "You have walked the martial path of the Blood Knight, but greater mysteries call to you. Transmute your martial vessel through ritual focus and lifeforce to elevate yourself and ascend into a true Blood Mage."
-  bm_elevate_to_blood_mage_decision_tooltip: "Undergo the metamorphosis to ascend from Blood Knight to Blood Mage"
-  bm_elevate_to_blood_mage_decision_confirm: "Begin the Metamorphosis"
-  bm_elevation_attempt_cooldown_tt: "You must recover from your previous failed elevation attempt"
